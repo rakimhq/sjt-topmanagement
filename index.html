@@ -1,0 +1,1326 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Top Manager — İcraçı Liderlik Mühakimə Testi</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --void: #080c14;
+    --deep: #0d1520;
+    --surface: #121e2e;
+    --panel: #192638;
+    --rim: #243447;
+    --gold: #c9a84c;
+    --gold-glow: #e8c96a;
+    --silver: #8ba3bd;
+    --ice: #d4e8f5;
+    --accent: #1a6fa8;
+    --accent-bright: #2b8fd4;
+    --success: #1db87a;
+    --danger: #e05252;
+    --warn: #e8a020;
+    --text-1: #eaf0f7;
+    --text-2: #a8bdd0;
+    --text-3: #637a8f;
+    --border: rgba(255,255,255,0.07);
+    --border-active: rgba(201,168,76,0.4);
+    --shadow-gold: 0 0 30px rgba(201,168,76,0.12);
+    --shadow-panel: 0 4px 32px rgba(0,0,0,0.4);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Outfit', sans-serif;
+    background: var(--void);
+    color: var(--text-1);
+    min-height: 100vh;
+    background-image:
+      radial-gradient(ellipse 80% 50% at 50% -20%, rgba(26,111,168,0.12) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 30% at 80% 80%, rgba(201,168,76,0.05) 0%, transparent 50%);
+  }
+
+  /* ── HEADER ── */
+  .site-header {
+    background: rgba(8,12,20,0.95);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--rim);
+    position: sticky; top: 0; z-index: 100;
+  }
+  .header-inner {
+    max-width: 1080px; margin: 0 auto;
+    padding: 14px 28px;
+    display: flex; align-items: center; justify-content: space-between; gap: 20px;
+  }
+  .logo-block { display: flex; flex-direction: column; }
+  .logo-main {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.15rem; font-weight: 600;
+    color: var(--gold);
+    letter-spacing: 0.04em;
+  }
+  .logo-sub { font-size: 0.68rem; color: var(--text-3); letter-spacing: 0.14em; text-transform: uppercase; margin-top: 1px; }
+
+  .hdr-right { display: flex; align-items: center; gap: 16px; }
+  .hdr-pill {
+    background: var(--panel); border: 1px solid var(--rim);
+    border-radius: 6px; padding: 6px 14px;
+    font-size: 0.78rem; color: var(--text-2);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .hdr-pill .val { color: var(--gold); font-weight: 600; font-size: 0.88rem; }
+
+  .progress-track { height: 2px; background: var(--rim); }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--gold));
+    transition: width 0.6s cubic-bezier(0.4,0,0.2,1);
+    width: 0%;
+    box-shadow: 0 0 8px var(--gold);
+  }
+
+  /* ── MAIN ── */
+  .main { max-width: 1080px; margin: 0 auto; padding: 36px 28px 100px; }
+
+  /* ── WELCOME ── */
+  #welcome-screen { animation: fadeUp 0.7s ease; }
+  .welcome-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 48px; align-items: center;
+    min-height: 70vh; padding: 40px 0;
+  }
+  .welcome-left { }
+  .w-eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.25);
+    border-radius: 4px; padding: 5px 14px;
+    font-size: 0.7rem; font-weight: 600; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--gold-glow);
+    margin-bottom: 24px;
+  }
+  .w-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 600; line-height: 1.15;
+    color: var(--text-1);
+    margin-bottom: 20px;
+  }
+  .w-title .accent { color: var(--gold); }
+  .w-desc { font-size: 0.95rem; line-height: 1.75; color: var(--text-2); margin-bottom: 32px; max-width: 480px; }
+
+  .w-stats {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;
+    margin-bottom: 36px;
+  }
+  .w-stat {
+    background: var(--panel); border: 1px solid var(--rim);
+    border-radius: 10px; padding: 16px 12px; text-align: center;
+    transition: border-color 0.2s;
+  }
+  .w-stat:hover { border-color: var(--border-active); }
+  .w-stat .n {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem; font-weight: 700; color: var(--gold);
+    line-height: 1;
+  }
+  .w-stat .l { font-size: 0.7rem; color: var(--text-3); margin-top: 5px; line-height: 1.3; }
+
+  .btn-start {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: var(--gold); color: var(--void);
+    border: none; border-radius: 8px;
+    padding: 15px 40px;
+    font-family: 'Outfit', sans-serif; font-size: 0.95rem; font-weight: 700;
+    letter-spacing: 0.05em; cursor: pointer;
+    transition: all 0.2s; box-shadow: 0 4px 24px rgba(201,168,76,0.3);
+  }
+  .btn-start:hover { background: var(--gold-glow); transform: translateY(-2px); box-shadow: 0 8px 32px rgba(201,168,76,0.4); }
+
+  .welcome-right {
+    display: flex; flex-direction: column; gap: 16px;
+  }
+  .competency-card {
+    background: var(--panel); border: 1px solid var(--rim);
+    border-radius: 12px; padding: 18px 20px;
+    display: flex; align-items: flex-start; gap: 14px;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .competency-card:hover { border-color: var(--border-active); transform: translateX(4px); }
+  .cc-icon {
+    width: 36px; height: 36px; border-radius: 8px;
+    background: rgba(201,168,76,0.12); border: 1px solid rgba(201,168,76,0.2);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem; flex-shrink: 0;
+  }
+  .cc-title { font-weight: 600; font-size: 0.88rem; color: var(--text-1); margin-bottom: 3px; }
+  .cc-desc { font-size: 0.75rem; color: var(--text-3); line-height: 1.5; }
+
+  /* ── SCENARIO BANNER ── */
+  .scenario-banner {
+    background: linear-gradient(135deg, var(--surface) 0%, var(--panel) 100%);
+    border: 1px solid var(--rim);
+    border-left: 3px solid var(--gold);
+    border-radius: 14px; padding: 28px 32px;
+    margin-bottom: 28px;
+    animation: slideDown 0.4s ease;
+    position: relative; overflow: hidden;
+  }
+  .scenario-banner::after {
+    content: attr(data-scenario);
+    position: absolute; right: 24px; top: 50%; transform: translateY(-50%);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 5rem; font-weight: 700; color: rgba(201,168,76,0.04);
+    letter-spacing: -0.02em; pointer-events: none;
+  }
+  .sb-eyebrow { font-size: 0.68rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
+  .sb-company { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 600; color: var(--text-1); margin-bottom: 10px; line-height: 1.2; }
+  .sb-context { font-size: 0.88rem; line-height: 1.75; color: var(--text-2); max-width: 700px; }
+  .sb-meta { display: flex; gap: 12px; margin-top: 14px; flex-wrap: wrap; }
+  .sb-tag {
+    background: rgba(255,255,255,0.04); border: 1px solid var(--rim);
+    border-radius: 4px; padding: 3px 10px;
+    font-size: 0.68rem; font-weight: 500; letter-spacing: 0.06em;
+    color: var(--text-3); text-transform: uppercase;
+  }
+
+  /* ── QUESTION CARD ── */
+  .q-card {
+    background: var(--surface); border: 1px solid var(--rim);
+    border-radius: 16px; overflow: hidden;
+    margin-bottom: 28px; box-shadow: var(--shadow-panel);
+    animation: fadeUp 0.35s ease;
+  }
+  .q-card-header {
+    background: var(--panel); border-bottom: 1px solid var(--rim);
+    padding: 18px 28px;
+    display: flex; align-items: center; gap: 14px;
+  }
+  .q-badge {
+    background: var(--accent); color: #fff;
+    width: 34px; height: 34px; border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 0.85rem; flex-shrink: 0;
+  }
+  .q-card-header .type-pill {
+    background: rgba(255,255,255,0.05); border: 1px solid var(--rim);
+    border-radius: 4px; padding: 3px 10px;
+    font-size: 0.68rem; font-weight: 600; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--text-3);
+  }
+  .q-comp-pill {
+    margin-left: auto;
+    background: rgba(201,168,76,0.08); border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 4px; padding: 3px 12px;
+    font-size: 0.68rem; font-weight: 600; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--gold);
+  }
+  .q-body { padding: 24px 28px; }
+  .q-situation {
+    background: rgba(255,255,255,0.025); border-left: 2px solid var(--gold);
+    border-radius: 0 8px 8px 0; padding: 18px 22px;
+    font-size: 0.91rem; line-height: 1.8; color: var(--text-2);
+    margin-bottom: 20px;
+  }
+  .q-instruction { font-size: 0.8rem; color: var(--text-3); font-style: italic; margin-bottom: 20px; }
+
+  /* ── OPTIONS ── */
+  .options { display: flex; flex-direction: column; gap: 10px; }
+
+  /* Most/Least */
+  .ml-opt {
+    background: rgba(255,255,255,0.025); border: 1px solid var(--rim);
+    border-radius: 10px; padding: 14px 18px;
+    display: grid; grid-template-columns: 1fr auto;
+    align-items: start; gap: 14px;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .ml-opt:hover { border-color: rgba(255,255,255,0.15); background: rgba(255,255,255,0.04); }
+  .ml-opt.sel-most { border-color: rgba(29,184,122,0.5); background: rgba(29,184,122,0.06); }
+  .ml-opt.sel-least { border-color: rgba(224,82,82,0.5); background: rgba(224,82,82,0.06); }
+  .ml-opt-text { display: flex; gap: 10px; }
+  .opt-ltr { font-weight: 700; color: var(--gold); font-size: 0.95rem; flex-shrink: 0; min-width: 18px; padding-top: 1px; }
+  .opt-txt { font-size: 0.88rem; line-height: 1.65; color: var(--text-1); }
+  .ml-ctrls { display: flex; gap: 8px; flex-shrink: 0; padding-top: 2px; }
+  .ml-btn {
+    padding: 5px 13px; border-radius: 5px; font-size: 0.7rem; font-weight: 700;
+    cursor: pointer; border: 1px solid; transition: all 0.16s;
+    letter-spacing: 0.04em; white-space: nowrap;
+  }
+  .ml-btn.most { border-color: rgba(29,184,122,0.4); color: var(--success); background: transparent; }
+  .ml-btn.most:hover, .ml-btn.most.on { background: var(--success); color: #fff; border-color: var(--success); }
+  .ml-btn.least { border-color: rgba(224,82,82,0.4); color: var(--danger); background: transparent; }
+  .ml-btn.least:hover, .ml-btn.least.on { background: var(--danger); color: #fff; border-color: var(--danger); }
+  .ml-btn:disabled { opacity: 0.2; cursor: not-allowed; }
+
+  /* Ranked */
+  .rk-opt {
+    background: rgba(255,255,255,0.025); border: 1px solid var(--rim);
+    border-radius: 10px; padding: 14px 18px;
+    display: grid; grid-template-columns: auto 1fr auto;
+    align-items: start; gap: 12px;
+    transition: border-color 0.2s;
+  }
+  .rk-opt.ranked { border-color: rgba(43,143,212,0.4); background: rgba(43,143,212,0.04); }
+  .rk-sel {
+    background: var(--panel); border: 1px solid var(--rim);
+    border-radius: 6px; padding: 6px 10px; padding-right: 28px;
+    font-family: 'Outfit', sans-serif; font-size: 0.8rem;
+    color: var(--text-1); cursor: pointer; min-width: 140px;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='7' fill='none'%3E%3Cpath d='M1 1l4.5 4.5L10 1' stroke='%23637a8f' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat; background-position: right 9px center;
+  }
+  .rk-sel:focus { outline: 1px solid var(--accent); }
+
+  /* Rated */
+  .rt-opt {
+    background: rgba(255,255,255,0.025); border: 1px solid var(--rim);
+    border-radius: 10px; padding: 14px 18px;
+    display: grid; grid-template-columns: auto 1fr;
+    gap: 12px; align-items: start;
+    transition: border-color 0.2s;
+  }
+  .rt-btns { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+  .rt-btn {
+    padding: 4px 11px; border-radius: 5px;
+    font-size: 0.69rem; font-weight: 600; letter-spacing: 0.04em;
+    cursor: pointer; border: 1px solid var(--rim);
+    background: transparent; color: var(--text-3);
+    transition: all 0.15s; white-space: nowrap;
+  }
+  .rt-btn:hover { border-color: var(--silver); color: var(--text-1); }
+  .rt-btn.a5 { background: #1a7a50; border-color: #1a7a50; color: #fff; }
+  .rt-btn.a4 { background: #1a6fa8; border-color: #1a6fa8; color: #fff; }
+  .rt-btn.a3 { background: #8a6a1a; border-color: #8a6a1a; color: #fff; }
+  .rt-btn.a2 { background: #8a3c1a; border-color: #8a3c1a; color: #fff; }
+  .rt-btn.a1 { background: #8a1a1a; border-color: #8a1a1a; color: #fff; }
+  .rt-btn:disabled { opacity: 0.2; cursor: not-allowed; }
+
+  /* ── NAV ── */
+  .nav-row {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-top: 32px; gap: 12px;
+  }
+  .btn-nav {
+    padding: 12px 28px; border-radius: 8px;
+    font-family: 'Outfit', sans-serif; font-size: 0.88rem; font-weight: 600;
+    cursor: pointer; border: 1px solid; transition: all 0.18s;
+    letter-spacing: 0.04em;
+  }
+  .btn-prev { border-color: var(--rim); color: var(--text-3); background: transparent; }
+  .btn-prev:hover:not(:disabled) { border-color: var(--silver); color: var(--text-2); }
+  .btn-next { border-color: var(--accent); background: var(--accent); color: #fff; }
+  .btn-next:hover:not(:disabled) { background: var(--accent-bright); border-color: var(--accent-bright); }
+  .btn-finish { border-color: var(--gold); background: var(--gold); color: var(--void); font-weight: 700; }
+  .btn-finish:hover:not(:disabled) { background: var(--gold-glow); border-color: var(--gold-glow); }
+  .btn-nav:disabled { opacity: 0.25; cursor: not-allowed; }
+  .q-counter { font-size: 0.8rem; color: var(--text-3); }
+
+  .alert-box {
+    background: rgba(232,160,32,0.08); border: 1px solid rgba(232,160,32,0.3);
+    border-radius: 8px; padding: 10px 16px;
+    font-size: 0.82rem; color: var(--warn);
+    margin-top: 14px; display: none;
+  }
+  .alert-box.show { display: block; }
+
+  /* ── SCENARIO DOTS ── */
+  .dots-row {
+    display: flex; gap: 10px; align-items: center;
+    justify-content: center; margin-bottom: 28px;
+  }
+  .dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--rim); transition: all 0.2s;
+  }
+  .dot.active { background: var(--gold); transform: scale(1.5); box-shadow: 0 0 8px var(--gold); }
+  .dot.done { background: var(--success); }
+
+  /* ── RESULTS ── */
+  #results-screen { animation: fadeUp 0.5s ease; }
+  .results-hero {
+    background: linear-gradient(135deg, var(--surface), var(--panel));
+    border: 1px solid var(--rim);
+    border-radius: 20px; padding: 48px 40px;
+    text-align: center; margin-bottom: 36px;
+    position: relative; overflow: hidden;
+  }
+  .results-hero::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    background: radial-gradient(ellipse 60% 60% at 50% 0%, rgba(201,168,76,0.1), transparent 70%);
+    pointer-events: none;
+  }
+  .rh-eyebrow { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; }
+  .rh-title { font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 600; color: var(--text-1); margin-bottom: 32px; }
+
+  .score-ring-wrap { position: relative; width: 140px; height: 140px; margin: 0 auto 20px; }
+  .score-ring-svg { width: 140px; height: 140px; transform: rotate(-90deg); }
+  .score-ring-bg { fill: none; stroke: var(--rim); stroke-width: 8; }
+  .score-ring-fill { fill: none; stroke-width: 8; stroke-linecap: round; transition: stroke-dashoffset 1.2s cubic-bezier(0.4,0,0.2,1); }
+  .score-ring-center {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    text-align: center;
+  }
+  .score-num { font-family: 'Cormorant Garamond', serif; font-size: 2.2rem; font-weight: 700; color: var(--gold); line-height: 1; }
+  .score-den { font-size: 0.72rem; color: var(--text-3); margin-top: 2px; }
+
+  .score-pct { font-size: 1.4rem; font-weight: 700; margin-bottom: 4px; }
+  .score-grade { font-size: 0.9rem; color: var(--text-2); }
+
+  .subscores {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 14px; margin-bottom: 36px;
+  }
+  .subscore-card {
+    background: var(--panel); border: 1px solid var(--rim);
+    border-radius: 12px; padding: 20px; text-align: center;
+  }
+  .subscore-card .sc-label { font-size: 0.67rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--text-3); margin-bottom: 6px; }
+  .subscore-card .sc-name { font-family: 'Cormorant Garamond', serif; font-size: 1rem; color: var(--text-1); margin-bottom: 12px; line-height: 1.3; }
+  .subscore-bar-track { height: 4px; background: var(--rim); border-radius: 2px; margin-bottom: 8px; overflow: hidden; }
+  .subscore-bar-fill { height: 100%; border-radius: 2px; background: linear-gradient(90deg, var(--accent), var(--gold)); }
+  .subscore-card .sc-score { font-size: 1.4rem; font-weight: 700; color: var(--gold-glow); }
+  .subscore-card .sc-max { font-size: 0.75rem; color: var(--text-3); }
+
+  /* Review */
+  .review-hdr {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem; font-weight: 600; color: var(--text-1);
+    padding-bottom: 14px; border-bottom: 1px solid var(--rim);
+    margin-bottom: 20px;
+  }
+  .rev-card {
+    background: var(--surface); border: 1px solid var(--rim);
+    border-radius: 12px; margin-bottom: 14px; overflow: hidden;
+  }
+  .rev-card-hdr {
+    padding: 14px 20px; display: flex; align-items: flex-start;
+    justify-content: space-between; gap: 12px;
+    cursor: pointer; user-select: none;
+    transition: background 0.18s;
+  }
+  .rev-card-hdr:hover { background: rgba(255,255,255,0.03); }
+  .rev-q-lbl { font-weight: 600; font-size: 0.86rem; color: var(--text-1); }
+  .rev-q-sub { font-size: 0.74rem; color: var(--text-3); margin-top: 3px; }
+  .rev-right { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+  .pts-pill {
+    padding: 3px 12px; border-radius: 20px;
+    font-size: 0.75rem; font-weight: 700; white-space: nowrap;
+  }
+  .pts-full { background: rgba(29,184,122,0.15); color: var(--success); border: 1px solid rgba(29,184,122,0.3); }
+  .pts-part { background: rgba(232,160,32,0.12); color: var(--warn); border: 1px solid rgba(232,160,32,0.3); }
+  .pts-zero { background: rgba(224,82,82,0.12); color: var(--danger); border: 1px solid rgba(224,82,82,0.3); }
+  .chevron-icon { color: var(--text-3); font-size: 0.8rem; transition: transform 0.2s; }
+  .rev-card-hdr.open .chevron-icon { transform: rotate(180deg); }
+  .rev-card-body { display: none; border-top: 1px solid var(--rim); padding: 20px; }
+  .rev-card-body.open { display: block; }
+  .rev-situation {
+    background: rgba(255,255,255,0.025); border-left: 2px solid var(--gold);
+    border-radius: 0 6px 6px 0; padding: 12px 16px;
+    font-size: 0.83rem; line-height: 1.75; color: var(--text-2);
+    margin-bottom: 16px;
+  }
+  .rev-opt {
+    border-radius: 7px; padding: 10px 14px;
+    margin-bottom: 8px; font-size: 0.83rem; line-height: 1.6;
+  }
+  .rev-opt .rl { font-weight: 700; margin-right: 6px; }
+  .rev-correct { background: rgba(29,184,122,0.08); border: 1px solid rgba(29,184,122,0.25); color: var(--text-1); }
+  .rev-wrong { background: rgba(224,82,82,0.08); border: 1px solid rgba(224,82,82,0.2); color: var(--text-1); }
+  .rev-neutral { background: rgba(255,255,255,0.025); border: 1px solid var(--rim); color: var(--text-2); }
+  .rev-explanation {
+    background: rgba(26,111,168,0.08); border: 1px solid rgba(26,111,168,0.25);
+    border-radius: 8px; padding: 14px 18px;
+    font-size: 0.82rem; line-height: 1.75; color: var(--text-2);
+    margin-top: 14px;
+  }
+  .rev-explanation strong { color: var(--accent-bright); display: block; margin-bottom: 6px; }
+
+  .btn-restart {
+    display: block; margin: 36px auto 0;
+    background: transparent; color: var(--gold);
+    border: 1px solid rgba(201,168,76,0.4);
+    border-radius: 8px; padding: 13px 36px;
+    font-family: 'Outfit', sans-serif; font-size: 0.9rem; font-weight: 600;
+    cursor: pointer; letter-spacing: 0.05em; transition: all 0.2s;
+  }
+  .btn-restart:hover { background: rgba(201,168,76,0.08); border-color: var(--gold); }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes slideDown { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
+
+  @media (max-width: 700px) {
+    .welcome-grid { grid-template-columns: 1fr; min-height: auto; gap: 32px; }
+    .welcome-right { display: none; }
+    .w-stats { grid-template-columns: repeat(2, 1fr); }
+    .main { padding: 20px 16px 80px; }
+    .scenario-banner { padding: 20px; }
+    .scenario-banner::after { display: none; }
+    .q-body { padding: 18px 16px; }
+    .ml-opt { grid-template-columns: 1fr; }
+    .ml-ctrls { margin-top: 8px; }
+    .rk-opt { grid-template-columns: 1fr; }
+    .header-inner { flex-wrap: wrap; }
+    .hdr-right { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <div class="logo-block">
+      <div class="logo-main">Executive Leadership Assessment</div>
+      <div class="logo-sub">Top Manager — Liderlik Mühakimə Testi</div>
+    </div>
+    <div class="hdr-right" id="hdr-right" style="display:none">
+      <div class="hdr-pill">İrəliləyiş: <span class="val" id="hdr-prog">0/16</span></div>
+      <div class="hdr-pill">Bal: <span class="val" id="hdr-score">0/52</span></div>
+    </div>
+  </div>
+  <div class="progress-track"><div class="progress-fill" id="prog-fill"></div></div>
+</header>
+
+<main class="main">
+
+  <!-- WELCOME -->
+  <div id="welcome-screen">
+    <div class="welcome-grid">
+      <div class="welcome-left">
+        <div class="w-eyebrow">⬡ C-Suite &amp; Üst Rəhbərlik Səviyyəsi</div>
+        <h1 class="w-title">İcraçı Lider<br><span class="accent">Mühakimə Testi</span></h1>
+        <p class="w-desc">Bu imtahan CEO, CFO, COO və üst idarəetmə rolları üçün nəzərdə tutulmuşdur. Ssenariilər real korporativ mürəkkəbliyi — idarə heyəti dinamikasından tutmuş M&A qərarlarına, strateji böhran idarəçiliyindən tutmuş xəlqəvi transformasiyalara qədər — əhatə edir.</p>
+        <div class="w-stats">
+          <div class="w-stat"><div class="n">4</div><div class="l">Korporativ Ssenari</div></div>
+          <div class="w-stat"><div class="n">16</div><div class="l">Strateji Situasiya</div></div>
+          <div class="w-stat"><div class="n">52</div><div class="l">Maks. Bal</div></div>
+          <div class="w-stat"><div class="n">∞</div><div class="l">Vaxt Limiti Yoxdur</div></div>
+        </div>
+        <button class="btn-start" onclick="startExam()">İmtahana Başla →</button>
+      </div>
+      <div class="welcome-right">
+        <div class="competency-card"><div class="cc-icon">🏛</div><div><div class="cc-title">Korporativ İdarəetmə</div><div class="cc-desc">İdarə heyəti münasibətləri, investor əlaqələri, tənzimləmə uyğunluğu, etik liderlik</div></div></div>
+        <div class="competency-card"><div class="cc-icon">♟</div><div><div class="cc-title">Strateji Transformasiya</div><div class="cc-desc">M&A qərarları, bazar giriş strategiyası, rəqabətli repozisiyalama, portfel idarəetməsi</div></div></div>
+        <div class="competency-card"><div class="cc-icon">👥</div><div><div class="cc-title">Üst Komanda Liderliyi</div><div class="cc-desc">C-suite dinamikası, istedadın varisliliyi, mədəniyyət transformasiyası, performans hesabatlılığı</div></div></div>
+        <div class="competency-card"><div class="cc-icon">⚡</div><div><div class="cc-title">Böhran &amp; Qərar Vermə</div><div class="cc-desc">Yüksək rəhbərlik qeyri-müəyyənliyi, reputasiya riskləri, maliyyə böhranı idarəsi</div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- EXAM -->
+  <div id="exam-screen" style="display:none">
+    <div class="dots-row" id="dots-row"></div>
+    <div id="scenario-container"></div>
+    <div id="question-container"></div>
+    <div class="alert-box" id="alert-box">⚠ Zəhmət olmasa bütün cavab sahələrini doldurun.</div>
+    <div class="nav-row">
+      <button class="btn-nav btn-prev" id="btn-prev" onclick="navigate(-1)" disabled>← Əvvəlki</button>
+      <div class="q-counter" id="q-counter">Sual 1 / 16</div>
+      <button class="btn-nav btn-next" id="btn-next" onclick="navigate(1)">Növbəti →</button>
+    </div>
+  </div>
+
+  <!-- RESULTS -->
+  <div id="results-screen" style="display:none"></div>
+</main>
+
+<script>
+// ══════════════════════════════════════════════
+// SCENARIOS & QUESTIONS DATA
+// ══════════════════════════════════════════════
+const scenarios = [
+  {
+    id: 1, label: "Ssenari 1", scenario: "I",
+    company: "NovaTerra Energetika Holdinqi — CEO",
+    context: "NovaTerra bərpa olunan enerji sektorunda fəaliyyət göstərən, birjada sıralanmış bir holdinqdir. Şirkət 8 ölkədə 3.200 işçiyə malikdir, il üzrə dövriyyəsi 1,4 milyard dollar, EBITDA marjı isə 18%-dir. Siz 6 ay əvvəl yeni CEO təyin edilmisiniz. Enerji keçidinin sürətlənməsi ilə bərpa olunan enerji qiymətlərindəki kəskin düşüş, şirkətin kapital strukturunu sıxışdırır. İdarə heyəti strateji transformasiya tələb edir; lakin üç böyük institusional investor müxtəlif istiqamətlər arasında bölünüb: biri aqressiv genişlənmə, digəri müdafiəçi konsolidasiya, üçüncüsü isə aktivlərin satışını müdafiə edir.",
+    tags: ["Strateji Liderlik", "İdarə Heyəti Münasibətləri", "Kapital İdarəetməsi"],
+    type: "most_least", maxScore: 4
+  },
+  {
+    id: 2, label: "Ssenari 2", scenario: "II",
+    company: "Meridian Fintech Group — CFO",
+    context: "Siz Meridian Fintech Group-un Baş Maliyyə Direktoru (CFO)-sunuz. Şirkət B2B ödəniş infrastrukturunun aparıcı platformasıdır: 47 bazarda 12.000+ korporativ müştərisi var, il üzrə gəliri 680 milyon dollardır. Şirkət son 3 ildə sürətli üzvi böyümə ilə borclanma leverajını artırıb. Faiz dərəcəsi şokuna hazırlıq məqsədilə İdarə heyəti maliyyə çevikliyini yenidən qurmağı tələb edir. Eyni zamanda bir rəqib şirkəti satın almaq üçün strategik fürsət yaranıb — bu satınalma bazarın 23%-ni əhatə edir, lakin borc leverajı məsələsini dərinləşdirir. Həmçinin əsas tənzimləyici orqan yeni kapital adekvatlıq tələbləri barədə sorğu göndərib.",
+    tags: ["Maliyyə Strategiyası", "M&A", "Tənzimləyici İdarəetmə"],
+    type: "ranked", maxScore: 12
+  },
+  {
+    id: 3, label: "Ssenari 3", scenario: "III",
+    company: "Axel Pharmaceuticals — COO",
+    context: "Siz Axel Pharmaceuticals-ın Baş Əməliyyat Direktoru (COO)-sunuz. Şirkət xronik xəstəliklər üçün ixtisaslaşmış ilaç istehsalçısıdır: 3 qitədə istehsal müəssisəsi, 6.800 işçi, il üzrə dövriyyəsi 920 milyon dollardır. FDA, şirkətin Nyu-Cersi zavodunda prosesual uyğunsuzluqlar aşkarlayıb; zavod bağlanırsa bu, ümumi istehsal gücünün 40%-nin itirilməsinə yol açar. Eyni zamanda Cənub-Şərqi Asiyaya yeni bazar genişlənməsi başlamaq üçün optimal vaxt gəlib; rəqiblər artıq orada mövqe tuturlar. İşçi dövriyyəsi son 18 ayda 28%-ə yüksəlib — bu, sənaye ortalama göstəricisinin ikiqatıdır.",
+    tags: ["Əməliyyat Mükəmməlliyi", "Böhran İdarəsi", "Təşkilati Liderlik"],
+    type: "most_least", maxScore: 4
+  },
+  {
+    id: 4, label: "Ssenari 4", scenario: "IV",
+    company: "Arcturus Capital Partners — Managing Partner",
+    context: "Siz Arcturus Capital Partners-ın İdarəedici Tərəfdaşısınız — şirkət orta bazara yönəlik özəl kapital fondu idarə edir: AUM 2,3 milyard dollar, portfeldə 9 şirkət var. LP bazası qlobal institutsional investorlardan ibarətdir. Fond stratejisi — əsas əməliyyatlarda dərin transformasiya etmək — yaxşı işlədiyindən portfelin 6 şirkəti hədəf gəlirliliyini aşdı. Lakin 3 şirkət ciddi məşğuliyyət çətinlikləri yaşayır. Dörd il sonra fond müddəti bitir; investorlar çıxış gözləyir. Eyni zamanda üst rəhbərlik komandanızda daxili gərginlik var: iki üst tərəfdaş stratejiyada ciddi fikir ayrılığındadır. LP-lərdən biri — 400 milyon dollarlıq investoru — növbəti fondla bağlı narahatlığını bildirib.",
+    tags: ["Fond İdarəetməsi", "Portfel Strategiyası", "Tərəfdaş Münasibətləri"],
+    type: "rated", maxScore: 12
+  }
+];
+
+const questions = [
+  // ── SCENARIO 1: NovaTerra (Most/Least, 1pt each) ──
+  {
+    id: 1, sIdx: 0, qNum: 1,
+    competency: "Strateji Vizyon",
+    situation: "Geniş investor sorğu sessiyasından üç həftə sonra üç böyük investorunuz diametralment fərqli strateji istiqamətləri dəstəkləyir. Investisiya bankınız sizi 90 gün ərzində aydın bir yol xəritəsi açıqlamağa sövq edir, əks halda birja analitikləri Kəskin qeyri-müəyyənlik kimi xarakterizə edəcək hesabatlar yazacaqlar. İdarə heyəti növbəti iclası 6 həftə sonradır. Üst komandanız isə strateji yönüm barədə hələ razılığa gəlməyib.",
+    instruction: "Aşağıdakı A-D cavablarını nəzərdən keçirin. 'Ən Çox' və 'Ən Az' etmək istərdiyinizi seçin.",
+    type: "most_least",
+    options: [
+      { letter: "A", text: "Analitiklərin gözləntiləri qarşılamaq üçün texniki açıqlamadan istifadə edərək strategiya barədə ümumi müsbət mesajlar çatdırın. Daxili razılığı gözləyərək konkret öhdəliklərdən çəkinin." },
+      { letter: "B", text: "Üst komanda ilə intensiv 2 həftəlik strateji iclas silsiləsi keçirin, sonra xarici maraqlı tərəflərlə məsləhətləşmədən əvvəl İdarə heyətinə ön-konsultasiya materyalı göndərin. Yalnız idarə heyəti ilkin istiqaməti təsdiqləyəndən sonra ictimai açıqlama edin." },
+      { letter: "C", text: "Hər bir böyük investorla ayrıca görüş keçirib onların əsas narahatlıqlarını anlayın. Bu məlumatı strateji seçimləri daraltmaq üçün istifadə edin, sonra idarə heyəti sessiyasını cəldləşdirin ki, konsensus razılaşdırılmış yol xəritəsi açıqlanabilsin." },
+      { letter: "D", text: "Üç strategiyadan birini — öz analitik qiymətləndirmənizə əsasən ən güclü olanı — seçin, İdarə heyətindən fövqəladə iclas tələb edərək sürətli razılaşdırma əldə edin, sonra cəsur, bir istiqamətli açıqlama edin. Güclü liderlik bazar qeyri-müəyyənliyini məhv edir." }
+    ],
+    answer: { most: "C", least: "A" },
+    explanations: {
+      A: "Ən az effektiv: texniki açıqlamalar inanılmaz olmayan investor bazasını daha da şübhələndirir. Strateji qeyri-müəyyənliyi gizlətmək uzunmüddətli etibar itkisinə yol açar.",
+      B: "Məqbul cavabdır — düzgün ardıcıllıq var (daxili→idarə heyəti→xarici), lakin investor məlumatını strateji girdi kimi istifadə etmir.",
+      C: "Ən effektiv: investor anlayışlarını toplayır (strateji məlumat kimi), sonra daxili prosesi cəldləşdirir. Bu, həm şəffaflığı, həm də proses intizamını birləşdirir.",
+      D: "Cəlbedici görünsə də risklidir: İdarə heyəti imzası olmadan böyük strateji əhdlər verərək böyük investor bazasını alienate etmək reputasiya böhranına çevrılə bilər."
+    }
+  },
+  {
+    id: 2, sIdx: 0, qNum: 2,
+    competency: "İdarə Heyəti Münasibətləri",
+    situation: "İdarə heyəti iclasında üç müstəqil direktor aktiv söz mübadiləsindədir. Bir direktor açıq şəkildə CFO-nun performansını sorğulayır; ikincisi maliyyə modelinin metodologiyasını tənqid edir; üçüncü isə texnologiya transformasiya planınızla razılaşmır. İclasın 20 dəqiqəsi qalıb, amma gündəmdəki mühüm kapital bölgüsü qərarı hələ müzakirə olunmayıb.",
+    instruction: "Aşağıdakı A-D cavablarını nəzərdən keçirin. 'Ən Çox' və 'Ən Az' etmək istərdiyinizi seçin.",
+    type: "most_least",
+    options: [
+      { letter: "A", text: "CFO-nun müdafiəsinə çıxın, metodologiya tənqidini birbaşa cavablandırın, sonra gündəmi kapital bölgüsü qərarına çevirin. Direktorlara vaxt çatışmazlığını xatırlatın." },
+      { letter: "B", text: "CFO-nun performansı barədə müzakirəni gündəmin xaricindəki mövzu olaraq dayandırın. Metodologiya mübahisəsini növbəti iclasa keçirin. Kapital bölgüsü üçün üç direktordan hər biri ilə bağlı narahatlıqlarını qısaca qeyd etmələrini xahiş edin, sonra rəy topladıqdan sonra qərara gəldiyinizi bildirin." },
+      { letter: "C", text: "İclası 15 dəqiqəyə uzatmağı təklif edin. CFO-ya metodologiya ilə bağlı tezis cavabı vermək üçün 5 dəqiqə ayırın. Sonra direktorlara açıq bir məsələ olmadığını bildirərək kapital bölgüsü qərarına keçin." },
+      { letter: "D", text: "Kapital bölgüsü qərarının vaxtında alınmasının kritik olduğunu bildirərək aktiv müzakirələri vaxt çərçivəsindən kənar kimi nəzakətlə dayandırın. Qeyd olunan üç narahatlığın hər birini növbəti iclasa qədər yazılı şəkildə cavablandıracağınıza söz verin. Kapital bölgüsünə keçin." }
+    ],
+    answer: { most: "D", least: "C" },
+    explanations: {
+      A: "Risklidir: CFO-nun müdafiəsi direktorlara birbaşa müxalif görünər; metodologiya mübahisəsi 20 dəqiqə iclasda həll ediləməz.",
+      B: "Məqbul: direktorların fikirini toplamaq yaxşıdır, lakin müzakirəni birbaşa dayandırmadan daha çox vaxt itirilir.",
+      C: "Ən az effektiv: iclas uzadılması zəif idarəetmə siqnalı verir; 5 dəqiqəlik texniki müdafiə metodoloji narahatlığı həll etmir.",
+      D: "Ən effektiv: narahatlıqları tanıyır, yazılı cavab öhdəliyi verir (hesabatlılıq), sonra gündəmin kritik maddəsinə keçir. Proses intizamını qoruyur."
+    }
+  },
+  {
+    id: 3, sIdx: 0, qNum: 3,
+    competency: "Mədəniyyət Transformasiyası",
+    situation: "İşçi cəlbetmə sorğusu CEO kimi birinci ilinizdə eNPS-in -12-dən +18-ə yüksəldiyini göstərir. Lakin rəhbərlik qrupunun 180 üzvü arasında aparılan daha ətraflı analiz narahatçılığa işarə edir: üst 20% performanslı menecerlərin 35%-i növbəti 12 ayda şirkəti tərk etmək niyyətindədir. Onların şikayəti: uzun müddətli mükafatlandırma differensiasiyasının olmaması — yüksək performanslı ilə orta performanslı menecerlər eyni maaş bandında qalır.",
+    instruction: "Aşağıdakı A-D cavablarını nəzərdən keçirin. 'Ən Çox' və 'Ən Az' etmək istərdiyinizi seçin.",
+    type: "most_least",
+    options: [
+      { letter: "A", text: "Növbəti büdcə dövründə ümumi kompensasiya islahatı hazırlanmasını İnsan Resursları direktoruna tapşırın. Orta müddətli bir həll kimi bu ilki bonusları 20% artırın." },
+      { letter: "B", text: "Üst 20%-lik menecerlər üçün dərhal fərqləndirilmiş saxlama mükafatları paketini aktivləşdirin. Paralel olaraq 90 gün ərzində istedad arxitekturasının hərtərəfli yenidən dizaynı üçün İR direktoru ilə intensiv iş başladın — uzunmüddətli bant differensiasiyası, kapital proqramları və liderlik karyera yolları daxil olmaqla." },
+      { letter: "C", text: "Ayrılmaq niyyətindəki menecer hər biri ilə şəxsən görüşün. Onların perspektivini anlayın. Saxlamaq istədikləriniz üçün fərdi kompensasiya paketlərini müzakirə edin." },
+      { letter: "D", text: "Bu problemi korporativ miqyasda açıq elan edin: performans differensiasiyasının NovaTerra-nın strateji prioriteti olduğunu bildirin. Üst 20%-i ayrıca mükafatlandıracaq yeni liderlik kompensasiya fəlsəfəsi tətbiq edin." }
+    ],
+    answer: { most: "B", least: "A" },
+    explanations: {
+      A: "Ən az effektiv: işə tapşırıq gec nəticə verir; birdəfəlik 20% artım əsas problemi — struktur differensiasiyasını — həll etmir.",
+      B: "Ən effektiv: ani risk (istedadın itirilməsi) ilə uzunmüddətli struktur islahı arasında balans qurur. Dərhal saxlama tədbirlərini sistem islahatı ilə birləşdirir.",
+      C: "Empatik amma ölçəklənmir: 35%×180 menecer fərdi görüşlər üçün çox böyükdür; həmçinin sistem probleminə fərdi həll tətbiq edir.",
+      D: "Cəsur mesaj verir lakin ictimai elan payda dərəcəsi aşağı performanslı menecerlər arasında mənəviyyat problemləri yarada bilər."
+    }
+  },
+  {
+    id: 4, sIdx: 0, qNum: 4,
+    competency: "Reputasiya & Böhran Liderliyi",
+    situation: "Cümə axşamı saat 16:30-da media nümayəndəniz xəbər verir: aparıcı bir iştirakçı jurnalist NovaTerra-nın Rumıniyadakı yarım inşa edilmiş külək enerji parkında mövcud olan ekoloji problem barədə həftəsonu bülleten yayımlamağı planlaşdırır. Xəbər tam olaraq düzgün deyil — söz gedən ərazidə standart inşaat suyu zəlallanması var, lakin hər hansı tənzimləmə pozuntusunun sənədi yoxdur. Birjada açılış qiyməti -8% kəsilə bilər. İdarə heyəti sədri artıq sizə zəng edib.",
+    instruction: "Aşağıdakı A-D cavablarını nəzərdən keçirin. 'Ən Çox' və 'Ən Az' etmək istərdiyinizi seçin.",
+    type: "most_least",
+    options: [
+      { letter: "A", text: "Juristlərə müdaxilə etdirin: jurnalistə dərc etmə əvvəlindən hüquqi bildiriş göndərin ki, ifadələri dəqiq olmayan faktlara əsaslanır. Şirkətin şöhrəti mühafizəsi hüququnu qeyd edin." },
+      { letter: "B", text: "Həftəsonu ərzindəki bütün həqiqətlər haqqında ətraflı bilgi üçün Rumıniyadakı əməliyyat komandasını zəng edin. Jurnalistlə proaktiv görüş qurun: faktları aydınlaşdırın, standart inşaat prosedurlarına riayət edildiyini sübut edəcək texniki sənədi təqdim edin. Dərcetmə əvvəli şəffaf açıqlama hazırlayın." },
+      { letter: "C", text: "Cümə axşamı gecəsi bütün əsas maraqlı tərəflər üçün (idarə heyəti, əsas investorlar, tənzimləyicilər) yazılı brifiq hazırlayın. Həftəsonu yalnız şirkətin öz kanalları vasitəsilə proaktiv açıqlama edin. Jurnalistlə birbaşa kontaktan imtina edin." },
+      { letter: "D", text: "Həftəsonu rəsmi şərh verməyin. Dərc edilən xəbər əsasında cavab açıqlaması hazırlayın: 'Bildirdilən iddialar yanlışdır, şirkət bütün tənzimləmə tələblərinə tam riayət edir.' Bazarın açılışından əvvəl bu mesajı dərc edin." }
+    ],
+    answer: { most: "B", least: "A" },
+    explanations: {
+      A: "Ən az effektiv: hüquqi hədə böhranı böyüdür, jurnalistin kanallarını daha geniş araşdırmaya sövq edir. 'Zəlallanmağa çalışan şirkət' hekayəsi yaranır.",
+      B: "Ən effektiv: faktlara əsaslı yanaşma — əvvəlcə həqiqəti öyrən, sonra sübut sənədi ilə proaktiv şəkildə jurnalistə müraciət et. Şəffaflıq reputasiya kapitalını qoruyur.",
+      C: "Məqbul: maraqlı tərəflər kommunikasiyası vacibdir, lakin jurnalistlə birbaşa təmastan imtina boşluğu jurnalistin öz versiyası ilə doldurar.",
+      D: "Risklidir: çıxınca cavab reaktiv görünür; faktlar dərc edilmədən əvvəl əldə edilə bilərsə, proaktiv cavab daha az zərər verir."
+    }
+  },
+
+  // ── SCENARIO 2: Meridian Fintech (Ranked, 3pts each) ──
+  {
+    id: 5, sIdx: 1, qNum: 1,
+    competency: "Kapital Strukturu Strategiyası",
+    situation: "Şirkətin cari Net Borc/EBITDA nisbəti 4,2×-dir. Investisiya dərəcəli kredit reytinqinizin qorunması üçün bu nisbətin 3,5×-dən aşağı saxlanması lazımdır. Satın almaq istədiyiniz rəqib şirkət (BazarTech) əldə edilsə bu nisbət 5,8×-ə qalxacaq. Digər tərəfdən tənzimləyici yeni kapital adekvatlıq tələbləri barədə 60 günlük cavab müddəti ilə sorğu göndərib. Şirkətin əsas müəssisəsi güclüdür: FCF (Azad Pul Axını) ildə 140 milyon dollardır.",
+    instruction: "Aşağıdakı A-D cavablarını effektivlik sırasına görə sıralayın: 1 = ən effektiv, 4 = ən az effektiv.",
+    type: "ranked",
+    options: [
+      { letter: "A", text: "BazarTech satınalmasını 18-24 ay təxirə salın. Bu müddətdə üzvi FCF axınını borcu azaltmağa yönləndirib kredit nisbətini 3,0×-ə endirin, sonra daha güclü maliyyə mövqeyindən satınalmanı həyata keçirin." },
+      { letter: "B", text: "BazarTech-i əldə etmək üçün hibrid maliyyələşdirmə qurun: 60% borc + 40% kapital (həyata keçirilmiş hüquqlarla aksiyaların yeni buraxılışı). Bu, pro-forma leverajı 4,5×-ə endirir. Paralel olaraq tənzimləyici cavabı 45 günə hazırlayın." },
+      { letter: "C", text: "Tənzimləyici ilə aktiv məşğuliyyət üçün dərhal baş tənzimləyici ofiseri (Chief Regulatory Officer) tapşırın. Tənzimləyici vəziyyətin tam həll edilməsini gözləyərək BazarTech müzakirəsini dayandırın." },
+      { letter: "D", text: "BazarTech satınalmasını tam olaraq kapital maliyyələşdirməsi (100% kapital) ilə strukturlandırın. Bu, kredit reytinqinizi qoruyur, lakin mövcud səhmdarları əhəmiyyətli dərəcədə seyrəldir (dilution ~22%). İdarə heyətiylə əvvəlcədən razılığa gəlin." }
+    ],
+    answer: { ranked: { A: 3, B: 1, C: 4, D: 2 } },
+    explanations: {
+      A: "3-cü ən effektiv: ehtiyatlı yanaşma, lakin 18-24 aylıq gecikmə rəqibin BazarTech-i əldə etməsinə imkan yarada bilər — bu da strateji fürsətin tamamilə itirilməsi deməkdir.",
+      B: "Ən effektiv: hibrid maliyyələşdirmə leverajı idarə edilən səviyyədə saxlayır, tam seyrəltmənin qarşısını alır, hər iki problemi (satınalma + tənzimləmə) eyni vaxtda həll edir.",
+      C: "Ən az effektiv: tənzimləyici cavabı prioritetləşdirmək vacibdir, lakin strateji fürsəti tamamilə dondurmaq CFO-nun öz mandatını aşmasıdır; bu qərar İdarə heyəti tərəfindən verilməlidir.",
+      D: "2-ci ən effektiv: kredit reytinqini qoruyur, lakin 22% seyrəltmə səhmdar dəyərini ciddi zərər verir və idarə heyəti/investorlarla münaqişə riskini artırır."
+    }
+  },
+  {
+    id: 6, sIdx: 1, qNum: 2,
+    competency: "Rəhbərlik Hesabatlılığı",
+    situation: "Son rübün maliyyə nəticələri gözləntiləri 12% aşdı — əsasən bir dəfəlik vergi güzəştinin sayəsində. Əməliyyat performansı isə nizamnamə büdcəsinin 3% altında qaldı. Birjaya Rüblük Hesabat açıqlanacağı sabahkı çağırış əvvəlindən üst komandanın 2 üzvü — baş gəlir direktoru (CRO) və baş texnologiya direktoru (CTO) — ümumi rübdəki əməliyyat geriliyini tənzimləmə yükü, makro və texnoloji səbəblərə bağlamaq istəyir. Lakin siz daxili məlumatdan bilirsiniz ki, geriliyə əsas töhfə satış icrasındakı zəiflikdir.",
+    instruction: "Aşağıdakı A-D cavablarını effektivlik sırasına görə sıralayın: 1 = ən effektiv, 4 = ən az effektiv.",
+    type: "ranked",
+    options: [
+      { letter: "A", text: "Çağırışdan əvvəl CRO və CTO-ya açıq söyləyin: satış icrasındakı zəiflik əsas amildir. Çağırışda bu faktı analitiklərə dürüst şəkildə açıqlayacaqsınız, xarici amillər haqqında da aydın kontekst verəcəksiniz. Komandanın həll planı barədə inamverici mesaj hazırlayın." },
+      { letter: "B", text: "Çağırışda ümumi ifadə istifadə edin: 'Əməliyyat gəliri bir neçə faktora görə hədəfin altında qaldı.' Spesifik səbəblərə aid analitik sualları növbəti rüb üçün daha dolğun məlumat əldə etdikdən sonra cavablandırmağı vəd edin." },
+      { letter: "C", text: "CRO-nun versiyasını dəstəkləyin: analitiklərə xarici amilləri əsas izahat kimi təqdim edin. Bunun hər iki problem üçün ən az riskli kommunikasiya olduğunu düşünürsünüz." },
+      { letter: "D", text: "CRO və CTO ilə fikir ayrılığınızı daxili olaraq həll edəmirsiniz, ona görə İdarə heyəti sedrinə məlumat verin. İdarə heyəti sədri çağırış mesajını qərar versin." }
+    ],
+    answer: { ranked: { A: 1, B: 3, C: 4, D: 2 } },
+    explanations: {
+      A: "Ən effektiv: düzgün cavabdır. SEC 10-Q mexanizmi maliyyə açıqlamalarında dürüstlüyü tələb edir; satış icrasındakı zəifliyi gizlətmək investor aldatması sayıla bilər. İnamverici həll planı geri çəkilməni minimuma endirir.",
+      B: "3-cü ən effektiv: aydın olmayan dil analitikləri qıcıqlandırır; sonrakı suallar daha aqressiv olur. Gecikmə ilə dürüstlük zaman itirilməsidir.",
+      C: "Ən az effektiv: yanlış ifadəyə icazə vermək SEC açıqlama standartlarını poza bilər; investor etibarı uzunmüddətli zərər görür.",
+      D: "2-ci ən effektiv: İdarə heyəti sədrinə məlumat vermək düzgündür, lakin CFO-nun bu məsələdə öz mövqeyini tutmadan üst qata ötürməsi liderlik zəifliyinin əlamətidir."
+    }
+  },
+  {
+    id: 7, sIdx: 1, qNum: 3,
+    competency: "Maliyyə Riski İdarəsi",
+    situation: "Şirkətin gəlirinin 31%-i Cənub-Şərqi Asiya bazarlarından gəlir; bu regionda lokal valyutalar sürətle devalvasiya olunub. Hazırki valyuta hedcinqi portfeliniz yalnız gəlirin 40%-ni əhatə edir. CFO olaraq növbəti 6 ay üçün valyuta riskini idarə etmək üçün strateji qərar verməlisiniz. Eyni zamanda BazarTech due diligence prosesi hazırlıq resurslarını sıxışdırır.",
+    instruction: "Aşağıdakı A-D cavablarını effektivlik sırasına görə sıralayın: 1 = ən effektiv, 4 = ən az effektiv.",
+    type: "ranked",
+    options: [
+      { letter: "A", text: "Xəzinəlik komandanıza SEA gəlirinin 70-80%-ni 12 aylıq FX forward müqavilələri ilə hedclemək tapşırın. Cari bazar qiymətlərindən istifadə edin. BazarTech due diligence davam etsin." },
+      { letter: "B", text: "Xarici FX riskinin idarəsi üçün bir ixtisaslaşmış bank tərəfdaşı seçin: onların egzotik FX opsiyonları portfeli ilə gerileme ssenariilərini limitləyin, eyni zamanda valyuta qüvvətlənərsə yuxarı potensialı qoruyun. BazarTech due diligence davam etsin." },
+      { letter: "C", text: "SEA gəlirinin yerli ödəniş şərtlərini yenidən müzakirə edin: müqavilələrdə valyuta keçidi bəndləri daxil edin. Bu, hedcin xərclərini aradan qaldırır. Lakin müştəri münasibətləri riskini qiymətləndirun." },
+      { letter: "D", text: "Cari hedcin səviyyəsini saxlayın. Valyuta dəyişkənliyi korporativ FX riskinin normal hissəsidir; artıq hedcin premiumları bu ilki EBITDA-nı əhəmiyyətli dərəcədə azaldacaq. Fokusunuzu BazarTech due diligence-ə yönləndirir." }
+    ],
+    answer: { ranked: { A: 2, B: 1, C: 3, D: 4 } },
+    explanations: {
+      A: "2-ci ən effektiv: əhatəni artırır, lakin forward müqavilələri valyuta qüvvətlənərsə yuxarı potensialı bağlayır. Klassik hedcin həllidir.",
+      B: "Ən effektiv: opsiyonlar aşağı qoruma ilə yuxarı potensialı birləşdirir; bu, asimmetrik risk idarəsi üçün optimal aləttir. Daha bahalı amma daha çevik.",
+      C: "3-cü ən effektiv: aqıllı uzunmüddətli yanaşma, lakin müqavilə yenidən müzakirəsi vaxt tələb edir; bu 6 aylıq valyuta riskini anındaca azaltmır.",
+      D: "Ən az effektiv: passiv yanaşma — 31% gəlir bazası üçün ~60% sıxışdırılmış qalır; valyuta şoku mənfəəti ciddi şəkildə zərər vurur."
+    }
+  },
+  {
+    id: 8, sIdx: 1, qNum: 4,
+    competency: "Maraqlı Tərəflərin İdarəsi",
+    situation: "Tənzimləyici sorğunuza 60 günlük cavab müddəti qalıb. Hüquq komandasının ilkin qiymətləndirməsi göstərir ki, yeni tələblər 2 ssenari yaradır: (a) şirkətin kapital ehtiyatlarını 18% artırmaq lazım gəlir ya da (b) müəyyən yüksək riskli ödəmə xidmətlərini dayandırın — bu xidmətlər gəlirin 8%-ini verir. Tənzimləyicinin pərdəarxası siqnalları cavabınızın keyfiyyəti ilə hesablamanın ssenarisini müəyyənləşdirəcəyini göstərir.",
+    instruction: "Aşağıdakı A-D cavablarını effektivlik sırasına görə sıralayın: 1 = ən effektiv, 4 = ən az effektiv.",
+    type: "ranked",
+    options: [
+      { letter: "A", text: "Xüsusi bir tənzimləyici strategiya firması işə götürün ki, rəsmi cavab sənədini hazırlasın. Müzakirə başlamazdan əvvəl standartın dürüst interpretasiyasını ictimaiyyətə açıqlayın." },
+      { letter: "B", text: "Tənzimləyici orqanın üst rəhbərliyi ilə açıq əsasda görüş tələb edin. Şirkətin uyğunluq yol xəritəsini, o cümlədən kapital gücləndirilməsini həyata keçirəcək konkret plan ilə görüşə hazırlanın. Diplomatik mesaj: şirkət tələbləri anlamaq və yerinə yetirmək istəyir." },
+      { letter: "C", text: "60 günlük müddəti hərtərəfli hüquqi cavab hazırlamaq üçün istifadə edin: tənzimləyicinin hər bir narahatlığını texniki dəqiqliklə cavablandırın, alternativ uyğunluq çərçivəsi də daxil olmaqla. Hüquqi qrupu cəlb edin." },
+      { letter: "D", text: "Hər iki ssenari üçün hüquq və maliyyə komandasına tam analizini tapşırın. Nəticəyə görə İdarə heyəti qərar versin. CFO kimi öz fikrini bildirməyin — bu, idarəçilik qərarıdır." }
+    ],
+    answer: { ranked: { A: 3, B: 1, C: 2, D: 4 } },
+    explanations: {
+      A: "3-cü ən effektiv: xarici ekspertiza faydalıdır, lakin ictimai açıqlama tənzimləyiciylə əvvəlcədn məşğul olmadan edildiyi təqdirdə münasibəti kəsinləşdirə bilər.",
+      B: "Ən effektiv: tənzimləyici münasibətlər əvvəlcə insan tərəfindədir. Açıq dialoq çox vaxt hüquqi arqumentasiyadan daha az sıxışdırıcı ssenarilər yaradır. Uyğunluq niyyəti güvən qurur.",
+      C: "2-ci ən effektiv: texniki uyğunluq cavabı vacibdir, lakin sənəd yalnız hüquqi prosesdir; münasibət qurulmadan tənzimləyicinin mövqeyini yumşatmır.",
+      D: "Ən az effektiv: CFO bu məsələdə vizyon təqdim etmək üçün ən uyğun icraçıdır; 'qərarsızlığı' İdarə heyətinə ötürmək öhdəliyi boş gəzdirir."
+    }
+  },
+
+  // ── SCENARIO 3: Axel Pharmaceuticals (Most/Least, 1pt each) ──
+  {
+    id: 9, sIdx: 2, qNum: 1,
+    competency: "Böhran İdarəsi & Əməliyyat Prioritetləri",
+    situation: "FDA məktubunu aldıqdan 72 saat sonrasındasınız. Nyu-Cersi zavodu 40% istehsal gücü verir. Bağlanma riskinin qarşısını almaq üçün 90 gün vaxtınız var. Eyni zamanda hər zaman açıq olan Cənub-Şərqi Asiya genişlənmə pəncərəsi bir növbəti rəqib tərəfindən bağlanmaqdadır. CFO-unuz böhran giderlərinin çoxluğu zamanda strateji genişlənmənin maliyyələşdirilməsinin ağır olduğunu bildirdi. Əməliyyat komandasının 3 üzvü müxtəlif prioritetlər üçün fərqli addım planları təqdim edib.",
+    instruction: "Aşağıdakı A-D cavablarını nəzərdən keçirin. 'Ən Çox' və 'Ən Az' etmək istərdiyinizi seçin.",
+    type: "most_least",
+    options: [
+      { letter: "A", text: "Şirkətin bütün icraçı resurslarını Nyu-Cersi FDA uyğunluğuna cəmləyin. Cənub-Şərqi Asiya genişlənmə müzakirəsini tam olaraq 6 aya bağlayın. 'Böhran dövründə heç bir yeni təşəbbüs' siyasəti elan edin." },
+      { letter: "B", text: "Xüsusi FDA uyğunluq qrupu qurun: xarici GMP məsləhətçisi ilə birlikdə 90 günlük uyğunluq planı hazırlasın. Eyni zamanda Cənub-Şərqi Asiya üçün ayrıca kiçik komanda qurun: yalnız hazırlıq və yerli tərəfdaşların ilkin qiymətləndirilməsi üçün. Bu iki iz paralel olar, lakin resurs paylaşmaz." },
+      { letter: "C", text: "FDA baxımı zamanı istehsal gücü boşluğunu doldurmaq üçün üçüncü tərəf kontraktlı istehsalçı (CMO) axtarın. Nyu-Cersi uyğunluğu ilə eyni vaxtda Cənub-Şərqi Asiyada ortaqlıq-əsaslı giriş modeli araşdırın: şirkətin öz birbaşa investisiyası olmadan yerli tərəfdaşla." },
+      { letter: "D", text: "Cənub-Şərqi Asiya genişlənməsini şirkətin strateji meydanını genişlətməsi üçün indi həyata keçirin: CFO-nu əlavə kredit liniyası açmağa yönləndirib iki prioriteti eyni anda maliyyələşdirin." }
+    ],
+    answer: { most: "B", least: "D" },
+    explanations: {
+      A: "Konservativ amma strateji fürsəti bütünlüklə itirən yanaşma. FDA böhranı idarə oluna bilər; tam şirkət donması rəqabət mövqeyini daimi zərər verir.",
+      B: "Ən effektiv: resurs bölgüsü aydındır, iki prioritet bir-birini əzmür. FDA uyğunluğu baş prioritetdir, lakin strateji hazırlıq dayandırılmır.",
+      C: "Yaradıcı yanaşma: CMO həlli fövri istehsal problemini həll edir; ortaqlıq modeli resurs sıxışdırılmasını azaldır. Lakin CMO tapmaq/onboard etmək öz vaxtını alır.",
+      D: "Ən az effektiv: FDA böhranı zamanı maliyyə leverajını artırmaq kredit reytinqini zərər verə bilər; iki böyük yüklü prioriteti eyni anda həyata keçirmək hər ikisini riskə atar."
+    }
+  },
+  {
+    id: 10, sIdx: 2, qNum: 2,
+    competency: "Komanda Liderliyi & Hesabatlılıq",
+    situation: "İşçi dövriyyəsinin 28%-ə çatması ilə bağlı vəziyyəti araşdırdığınızda aşkar olur ki: (1) ayrılanların 62%-i 'liderliklə əlaqə' problemi qeyd edib, (2) üç regional əməliyyat direktoru arasında performans arasındakı fərq böyükdür — birinci üstün nəticə verir, ikinci orta, üçüncüsü isə davamlı olaraq hədəfin altında qalır; (3) HR direktoru dövriyyə problemini əvvəlcədən bildirməyib. HR direktoru artıq 12 ildir şirkətdədir və şirkətin quruluş dövründəki əsas şəxsiyyətlərdəndir.",
+    instruction: "Aşağıdakı A-D cavablarını nəzərdən keçirin. 'Ən Çox' və 'Ən Az' etmək istərdiyinizi seçin.",
+    type: "most_least",
+    options: [
+      { letter: "A", text: "HR direktoru ilə özəl görüş keçirin: dövriyyə problemini vaxtında bildirməmə barədə narahatlığınızı açıq bildirin. Görüşdən sonra performans müzakirəsi açın; 90 günlük islahat planı hazırlamasını tələb edin. Aşağı performanslı regional direktoru da eyni prosesə cəlb edin." },
+      { letter: "B", text: "Xarici idarəetmə məsləhətçisi işə götürün ki, şirkətin liderlik mədəniyyətini qiymətləndirsin. HR direktoru ilə heç nə etməyin: onun şirkəttəki uzun tarixi mövcud münasibətləri poza bilər." },
+      { letter: "C", text: "Böyük bir komanda toplantısı çağırın: işçi dövriyyəsini strateji prioritet kimi elan edin. Dövriyyə metriklərini bütün regional direktorlar üçün rəsmi KPI-ya daxil edin. HR direktoruna görünürlük verin." },
+      { letter: "D", text: "Aşağı performanslı regional direktoru dərhal vəzifəsindən azad edin — onun son 18 aydakı dövriyyəsi sübut yetərlidir. HR direktorunu islahatı rəhbərlik etmək üçün məsuliyyətləndirin." }
+    ],
+    answer: { most: "A", least: "B" },
+    explanations: {
+      A: "Ən effektiv: hesabatlılığı qurmaq şəxsən və birbaşa edilir; ikisi arasında aydın ayrılma var. Həm HR, həm regional direktor strukturlu islahat sürecindədir.",
+      B: "Ən az effektiv: xarici konsultant problemin öz səriyyətiylə tətbiq etdiyi 'arxadan liderlik' yanaşmasıdır; HR direktoru ilə münasibətin sürətləndirilməsi tənzimləmə zamanını uzadır.",
+      C: "KPI genişlənməsi lazımdır, lakin toplantı-yönümlü elanlar fərdi hesabatlılığın yerini tuta bilməz.",
+      D: "Sürətli vəzifədən azad etmə performans sənədi olmadan hüquqi risk yaradır; HR direktoruna islahatı tapşırmaq onun özünün problemli olduğu kontekstdə ziddiyyətlidir."
+    }
+  },
+  {
+    id: 11, sIdx: 2, qNum: 3,
+    competency: "Strateji Çeviklik",
+    situation: "Nyu-Cersi zavodunun FDA uyğunluq planını 45-ci gündə nəzərdən keçirirsiniz. Xarici GMP məsləhətçisi çox pis xəbər bildirir: zavodun infrastrukturunun 30%-i köhnəlib; tam uyğunluq üçün ya 6 ay ərzində 85 milyon dollarlıq reinvestisiya lazımdır, ya da zavodun qısa müddətdə bağlanması. Üçüncü alternativ də var: zavodu tamamilə bağlayıb istehsalı Çexiyadakı zavoda keçirin — lakin bu, Nyu-Cersi-dəki 1.200 işçinin itkisi deməkdir. Cənub-Şərqi Asiya genişlənmə qrupu isə ümidverici tərəfdaş imkanı tapdı.",
+    instruction: "Aşağıdakı A-D cavablarını nəzərdən keçirin. 'Ən Çox' və 'Ən Az' etmək istərdiyinizi seçin.",
+    type: "most_least",
+    options: [
+      { letter: "A", text: "Şirkətin balans hesabatını və uzunmüddətli strateji mövqeyini nəzərə alaraq 85 milyon dollarlıq reinvestisiyanı məqbul xərc kimi qiymətləndirin. Nyu-Cersi-nin mövcud qüvvəti ilə uyğunluq məsafəsi hesabına çexiya seçimindən daha optimal olduğunu müdafiə edin." },
+      { letter: "B", text: "İdarə heyəti üçün üç ssenarinin tam maliyyə modelini hazırlayın: (1) 85M$ reinvestisiya; (2) müvəqqəti bağlanma + CMO; (3) Çexiya gücləndirilməsi + Nyu-Cersi bağlanması. Hər ssenarinin NPV, EBITDA təsiri, iş riskləri və insan kapitalı xərclərini göstərin. İdarə heyətinə lazımlı məlumatı verin, öz tövsiyənizi də daxil edin." },
+      { letter: "C", text: "FDA ilə birbaşa görüşə tələb edin: uyğunluq qrafikinin uzadılması barədə danışıq aparın. 85M$ reinvestisiya öhdəliyini nümayiş etdirərək uyğunluq müddətini 12 aya uzatmağı xahiş edin." },
+      { letter: "D", text: "Nyu-Cersi zavodunu bağlayın. İşçilərə cömerd ixtisar paketi verin. İstehsalı Çexiyaya keçirin — bu, uzunmüddətli əməliyyat çevikliyini artırır. Cənub-Şərqi Asiya tərəfdaşı ilə müqaviləni imzalayın." }
+    ],
+    answer: { most: "B", least: "D" },
+    explanations: {
+      A: "Analitik cəhətdən tutarlı ola bilər, lakin bu mürəkkəblikdə COO-nun idarə heyəti məlumatı olmadan 85M$ qərara tək gəlməsi idarəetmə normalarından kənardır.",
+      B: "Ən effektiv: bu həcmdə qərarlar idarə heyəti tərəfindən verilməlidir. COO-nun rolu lazımlı məlumatı strukturlu şəkildə hazırlamaq, öz tövsiyəsini də bildirməkdir.",
+      C: "Yaradıcı amma risklidir: FDA ilə müddət uzadılması danışığı uğursuz olarsa şirkətin pozisiyası zəifləyir.",
+      D: "Ən az effektiv: 1.200 işçini tək başına idarə heyəti icazəsi olmadan buraxmaq böyük hüquqi, reputasiya və insan kapitalı riskləridir. Sürətli qərar strateji kompromislər barədə heç bir analizi əks etdirmir."
+    }
+  },
+  {
+    id: 12, sIdx: 2, qNum: 4,
+    competency: "Maraqlı Tərəf Kommunikasiyası",
+    situation: "Nyu-Cersi zavodunun yenidən qurulmasını dəstəkləmək üçün idarə heyəti 85M$ reinvestisiyası qərarı verdi. İndi üç fərqli kommunikasiya məsələsi var: (1) işçilər belirsizlik içindədir; (2) müştərilər təchizat zəncirinə dair suallar verirlər; (3) media savadlı bir nəşrin zavodun bağlanacağı barədə spekulyativ xəbər yaymışdır.",
+    instruction: "Aşağıdakı A-D cavablarını nəzərdən keçirin. 'Ən Çox' və 'Ən Az' etmək istərdiyinizi seçin.",
+    type: "most_least",
+    options: [
+      { letter: "A", text: "Hüquq qrubunun tövsiyəsini gözləyin: FDA prosesi davam etdikcə açıqlama hüquqi öhdəlik yarada bilər. Heç bir açıqlama etməyin — nə daxili, nə xarici." },
+      { letter: "B", text: "Əvvəlcə işçilərə — bütün fabrik işçiləri üçün icma toplantısı keçirin: şirkətin öhdəliyini, 85M$ reinvestisiya planını, FDA uyğunluq çərçivəsini şəffaf şəkildə paylaşın. Sonra müştərilərə fərdi məktub göndərin: təchizatın qorunduğunu, CMO yedəkliyinin tətbiq edildiyini bildirin. Mediya spekulyasiyasına rəsmi açıqlamayla cavab verin." },
+      { letter: "C", text: "Mediyaya cavab verin: spekulyasiyaları dəqiq olmayan olaraq nişanlayın. İşçilərə yazılı xülasə göndərin: iş yerinin qorunduğunu yazın. Müştərilərə cavab vermək üçün satış komandasını aktivləşdirin." },
+      { letter: "D", text: "Hər kanalı ayrıca idarə edin: mediya münasibətləri qrupuna spekulyasiyaları idarə etməyi tapşırın; HR-a işçi kommunikasiyasını, satış qrupuna müştəri münasibətlərini tapşırın. Siz yalnız eskalasiyaları idarə edin." }
+    ],
+    answer: { most: "B", least: "A" },
+    explanations: {
+      A: "Ən az effektiv: sükut narahatlığı doldurur; işçilər ən pis ssenarini düşünür. Mediya spekulyasiyası davamlı artır. Bu, şirkətin öz hekayəsini itirdiyi klassik hallardır.",
+      B: "Ən effektiv: işçilər əvvəlcə gəlir — bu, etika və iştiraklılıqdır. Sonra müştərilər, sonra media. Hər auditoriya üçün fərdi, spesifik mesaj.",
+      C: "Məqbul amma passivdir: yazılı xülasə şəxsi icma toplantısından daha az effektlidir; satış komandasını müştərilərin qarşısına qaytarmaq kommunikasiyanı standartlaşdırmır.",
+      D: "Silolarda kommunikasiya koordinasiyasızlıq yaradır — fərqli kanallara ziddiyyətli mesajlar çata bilər."
+    }
+  },
+
+  // ── SCENARIO 4: Arcturus Capital (Rated, 3pts each) ──
+  {
+    id: 13, sIdx: 3, qNum: 1,
+    competency: "Portfel Strateji Qərar Vermə",
+    situation: "Portfeldəki 3 çətin şirkətin ən böyüyü — bir texnologiya yazılımı şirkəti (TechVista) — dörd ildir Arcturus-un nəzarəti altındadır. Alınarkən 4,2× EBITDA çarpanında qiymətləndirilmişdi; hazırda 6,2× EBITDA qiymətləndirilir. Lakin şirkətin gəlimi son 3 çeyrəkdə 8% azalib, EBITDA marjı 26%-dən 18%-ə düşüb. Fond müddəti 4 ildən sonra bitir. Sektoral çarpanlar genişlənib; bu, indi sata bilmək halında qazanclı çıxışa imkan verər. Lakin əsas problem — şirkətin satış modelinin köhnəlməsidir — düzəldilməyib; gəlir azalması davam edirsə 2 il sonra sektoral çarpanlar yenidən daralacaq.",
+    instruction: "Aşağıdakı A-E cavablarını qiymətləndirin: Çox Effektiv, Effektiv, Qismən Effektiv, Effektsiz, Əks Nəticəli.",
+    type: "rated",
+    options: [
+      { letter: "A", text: "İndi satın: cari sektoral genişlənmədən istifadə edərək strategik alıcıya və ya ikincil alıcıya satışa başlayın. Fond LP-lərini dönüş mənfəətiylə sevindirir. Əməliyyat probleminin daha dərinləşmə riskini aradan qaldırırsınız." },
+      { letter: "B", text: "6-9 aylıq intensiv satış modeli transformasiyası başladın — xarici satış liderliyi işə götürün, texnoloji platforma yenilənsin — sonra yenilənmiş gəlim artımı hekayəsiylə daha yüksək çarpandan satın." },
+      { letter: "C", text: "TechVista üçün sektoral stratejiki tərəfdaşla ortaqlıq araşdırın: azlıq payını stratejiki alıcıya satın, bu alıcı satış kanallarına giriş təmin etsin. Aztaylaşdırılmış likvidlik + əməliyyat dəstəyi." },
+      { letter: "D", text: "Fond müddəti 4 il qaldığından dərhal heç bir şey etməyin. Əməliyyat meneceri komandası özü döngü düzəltməlidir. Müdaxilə etdiyiniz zaman daha çox motivasiya problemləri yaranır." },
+      { letter: "E", text: "TechVista-nın gəlir azalmasını kabul edərək onu fond portfelindəki digər bir şirkətlə birləşdirin — bundan sinerjilər əldə edilə bilər. Bu, birləşdirilmiş şirkəti daha cazibədar çıxış adayına çevirər." }
+    ],
+    answer: { rated: { A: 4, B: 5, C: 3, D: 2, E: 1 } },
+    explanations: {
+      A: "Effektiv: cari sektoral pəncərəni istifadə etmək məqbul PE çıxış disiplindir. Lakin 'ən çox effektiv' deyil: gəlir düşüşü düzəldilmədən satış adayı kimi görünən şirkətin çarpanı zaten azalacaq.",
+      B: "Çox Effektiv: məcburi satışdan əvvəl 6-9 aylıq transformasiya yatırımı daha yüksək çarpan + daha güclü gəlim hekayəsi yaradır. PE liderliyi bu balansı idarə etmək üçün mövcuddur.",
+      C: "Qismən Effektiv: yaradıcı, lakin azlıq satışı LP-lərin gözləntisinə tam cavab vermir; strateji tərəfdaş üzərindəki kontrol azalır.",
+      D: "Effektsiz: 4 illik vaxt mövcuddur lakin 3 çeyrəklik gəlim azalması müdaxilə tələb edir; fəal deyil aktiv investorlar üçün 'gözlə-gör' passiv PE liderliyin terk edilməsidir.",
+      E: "Əks Nəticəli: portfel daxili birləşdirmə ciddi inteqrasiya riskləri yaradır; əsas problem — satış modeli — həll edilməyib. İki çətin şirkətin birləşdirilməsi daha böyük problem yarada bilər."
+    }
+  },
+  {
+    id: 14, sIdx: 3, qNum: 2,
+    competency: "Tərəfdaş Münaqişəsi & Qərar İdarəetməsi",
+    situation: "Iki üst tərəfdaşınız — Əli Hüseynov (müxtəsərlik yanlısı: büzülmə, konsolidasiya, etibarlı çıxışlar) və Sarah Chen (böyümə yanlısı: yeni platformalara ağır investisiya, fond müddətinin uzadılması) — açıq şəkildə münaqişədədir. Bu fikir ayrılığı artıq LP-lərə çatıb: 400M$-lıq LP-niz dördüncü il icmal hesabatında 'idarəetmə inteqrasyonu haqqında narahatlıqları' qeyd edib.",
+    instruction: "Aşağıdakı A-E cavablarını qiymətləndirin: Çox Effektiv, Effektiv, Qismən Effektiv, Effektsiz, Əks Nəticəli.",
+    type: "rated",
+    options: [
+      { letter: "A", text: "Hər iki tərəfdaşı fərdi görüşlərdə dinləyin. Sonra üçlü format keçirin: strateji fərqlilikləri kollektiv olaraq ictimai məlumat, portfel fərqlilikləri, fond müddəti məhdudiyyətlərini nəzərə alaraq mənimsəyin. Razılaşdırılmış orta yol strategiyasını idarəetmə komitəsinin sənədinə çevirin." },
+      { letter: "B", text: "Hər iki tərəfdaşa aydın bildirin: LP narahatlığı mövcuddur, bu, fond-levəl reputasiya riskidir. İkisinə 2 həftə müddəti verin: birgə razılaşdırılmış yazılı perspektiv hazırlasınlar. Razılaşa bilmirsə, siz qərar verəcəksiniz — bu qərar İdarə Komitəsinin qərarıdır." },
+      { letter: "C", text: "Hər iki tərəfdaşı tanıyır bir xarici biznes vasitəçisi dəvət edin. Gizli sessiyada tərəfdaşlıq dinamikasını yenidən formalaşdırsın. Onların strateji görüşlərini qiymətləndirsin, sonra sizə tövsiyə versin." },
+      { letter: "D", text: "400M$-lıq LP-yə şəxsən zəng edin: narahatlığı dinləyin, şirkətin idarəetmə strukturuna əminlik bildirin, fond strategiyasının möhkəm olduğunu vurğulayın. Daxili fikir ayrılığı barədə heç nə açıqlamayın." },
+      { letter: "E", text: "Həl prosesini sürətləndirmək üçün strateji məsələdə açıq qiymətləmə başladın: hər iki tərəfdaşın mövqeyini portfel komandasına açıqlamasını xahiş edin, sonra kollektiv rəy toplayın. Ən çox dəstək alan strategiya seçilsin." }
+    ],
+    answer: { rated: { A: 4, B: 5, C: 3, D: 2, E: 1 } },
+    explanations: {
+      A: "Effektiv: proses yaxşıdır — daxilindən həll, sənədləşdirilmiş. Lakin bu proses LP narahatlığını bilavasitə həll etmir.",
+      B: "Çox Effektiv: aydın son tarix + qərar eskalasiyası aydınlığı yaradır. LP narahatlığını tanıyır (bu, cavabı sürətləndirir). Liderlik hesabatlılığını göstərir.",
+      C: "Qismən Effektiv: vasitəçi faydası ola bilər, lakin reputasiya riskini gecikdirir; xarici proses daxili qərar verməni uzadır.",
+      D: "Effektsiz: LP zəngi şəffaflıq olmadan sadəcə 'güvən bizi' mesajıdır; daxili problem həll edilmadan bu inandırıcı deyil.",
+      E: "Əks Nəticəli: tərəfdaşlıq strateji kəşfiyyatı demokrasiyayla həll etmiri; yüksək rütbəli tərəfdaş münaqişəsini komanda rəyinə açmaq ciddi motivasiya problemləri yaradır."
+    }
+  },
+  {
+    id: 15, sIdx: 3, qNum: 3,
+    competency: "LP Münasibətləri & Fond İdarəetməsi",
+    situation: "Fond müddəti 4 il qalıb. Portfolio üçün gözlənən Ümumi Dəyər Ödənilmiş Kapitalın Dəfəsi (TVPI) hədəf 2,2×-dir. Cari proqnoz 1,78×-dir — bunun əsas səbəbi 3 çətin şirkətdir. Ən böyük LP-niz (400M$) növbəti fond üçün qərar müzakirəsi başlamazdan əvvəl son rüb icmalında 'dördüncü fond prioması barədə daha çox aydınlıq' istəyir. Dördüncü fond yığımı üçün ideya beyin fırtınası artıq başlayıb, lakin 3-cü fond hədəf aralığının altında qaldıqca LP-lərin yeni törəmə fonda iştirak etme ehtimalı aşağıdır.",
+    instruction: "Aşağıdakı A-E cavablarını qiymətləndirin: Çox Effektiv, Effektiv, Qismən Effektiv, Effektsiz, Əks Nəticəli.",
+    type: "rated",
+    options: [
+      { letter: "A", text: "400M$-lıq LP ilə fərdi görüş keçirin: 3-cü fondun hər bir şirkəti üçün dəqiq 12-24 aylıq qaçış yolunu, realistik TVPI proqnozunu (hətta konservativ ssenarini) müzakirə edin. Sonra 4-cü fondun diferensiasiya edilmiş strategiyasını — nə fərqli olacaq — ayrıca layihə olaraq soruşun. Dürüst, məlumata əsaslı söhbət." },
+      { letter: "B", text: "3-cü fond görüntüsünü yaxşılaşdırmaq üçün qısa müddətli yüksək qiymətləndirilmiş şirkətin satışını sürətləndirin. TVPI-nin ən azı 2,0×-ə çatması üçün. Bu çıxışı ictimai elan edin. Sonra LP ilə yenidən danışın." },
+      { letter: "C", text: "4-cü fond yığımını 18 ay təxirə salın — 3-cü fond hədəf aralığına daha yaxın gəlsin deyə. Bu müddətdə çətin şirkətlər üçün hərtərəfli dönüş planı başladın." },
+      { letter: "D", text: "400M$-lıq LP-nin komitəsini ziyarət edib formal prezentasiya verin: 3-cü fond ssenarisi, dönüş planı, 4-cü fond üçün mümkün strateji differensiasiya. Dəvət etdiyiniz görüşdə onlara öz qiymətləndirməsi üçün 30 gün verin." },
+      { letter: "E", text: "Bir neçə yeni LP-yə məktub göndərin ki, LP bazasını genişləndirib mövcud LP-lərin nisbətini azaldın. 400M$-lıq LP-ni daha az kritik vəziyyətə sürükləyin." }
+    ],
+    answer: { rated: { A: 5, B: 3, C: 4, D: 2, E: 1 } },
+    explanations: {
+      A: "Çox Effektiv: dürüstlük PE inaminin əsasıdır. Proqnozları dürüst paylaşmaq, həm 3-cü fond həllini, həm 4-cü fund differensiasiyasını birlikdə müzakirə etmək LP-nin özü üçün qərar verməsinə imkan yaradır. Uzunmüddətli münasibəti qoruyur.",
+      B: "Qismən Effektiv: strateji satış qərarının LP görüntüsünü yaxşılaşdırmaq üçün sürətləndirilməsi portfel üçün optimal ola bilməz; 'görüntü üçün satış' uzunmüddətli fond sədəqəsinin əksinədir.",
+      C: "Effektiv: mühafizəkar, lakin 18 aylıq gecikdirmə rəqabət mövqeyini zərər verir; LP-lər bunu passivlik kimi görə bilər.",
+      D: "Effektsiz: formal prezentasiya dürüst dialoqun yerini tuta bilmir; 'cavab gözlə' dinamikası LP-nin inamını artırmır.",
+      E: "Əks Nəticəli: mövcud LP-ləri 'seyreldin' fikri sənayedə etik deyil; əsas LP-ni alienate etmək reputasiya bombasıdır."
+    }
+  },
+  {
+    id: 16, sIdx: 3, qNum: 4,
+    competency: "Etik Liderlik & Fond Hesabatlılığı",
+    situation: "Portfeldəki bir şirkətin (HealthBridge, tibbi cihazlar) baş direktoru sizdən fondun şirkətin işçiləri ilə öz hissə sazişini imzalamazdan əvvəl şirkətin satış proqnozunu 'daha optimist' göstərməsini 'xahiş edir'. Baş direktor deyir ki, əks halda istedadların bir qismi potensial opsiyonların geri alınmasından narahat olub şirkəti tərk edəcək. Siz şirkətin cari satış proqnozunun realist olduğunu bilirsiniz; artıq optismist proqnoz potensial olaraq mülki yükümlülük yarada bilər.",
+    instruction: "Aşağıdakı A-E cavablarını qiymətləndirin: Çox Effektiv, Effektiv, Qismən Effektiv, Effektsiz, Əks Nəticəli.",
+    type: "rated",
+    options: [
+      { letter: "A", text: "Baş direktora açıq rədd cavabı verin: proqnozları şişirdilmiş göstərməyin hüquqi, etik və fond reputasiyası üçün nəticələrini izah edin. İşçi saxlama probleminin alternativ həllini birlikdə araşdırın — hissə planının yenidən dizaynı, saxlama mükafatları kimi." },
+      { letter: "B", text: "Fondun hüquq məsləhətçisinə dərhal müraciət edin: bu xahişin açıqlama öhdəliklərinə uyğunluğunu yoxlayın. Hüquqi nəticə aydın olmadan heç bir şey etməyin." },
+      { letter: "C", text: "Baş direktora deyIN: şişirilmiş proqnoz mümkün deyil, lakin şirkətin 'inkişaf potensialı' barədə işçilərə sizi əlverişli görüntüdə tanıdan mesaj hazırlamağa kömək edin. Prosesin içindən 'proqnoz olmayan' yaradıcı yazılı kommunikasiya həll kimi istifadə edilsin." },
+      { letter: "C2", text: "Baş direktora bildirin ki, proqnoz 'əsas ssenari' olaraq verilə bilər, lakin 'rəsmi proqnoz' kimi deyil. Bu, texniki fərqliliyi istifadə edərək mesajı yumşaldır." },
+      { letter: "D", text: "Bu vəziyyəti fondun etik baxımdan müstəqil üçüncü tərəfindən oluşturulan idarəetmə komitəsinə bildirin. Onlar qərar verənədək heç bir şey etməyin." },
+      { letter: "E", text: "İşçilərin opsiyonları üçün narahat olduqlarını anlayırsınız. Hissə sazişini fondun digər portfeli şirkətlərindəki standart işçi opsiyonu praktikalarından ilham alaraq yenidən hazırlayın; realist proqnozu saxlayın." }
+    ],
+    answer: { rated: { A: 5, B: 4, C: 1, D: 3, E: 2 } },
+    explanations: {
+      A: "Çox Effektiv: dərhal, aydın etik mövqe + konstruktiv alternativ həll. Bu, liderlik hesabatlılığının ən yüksək standartıdır. Münasibəti qoruyur, əsas problemi həll edir.",
+      B: "Effektiv: hüquqi məsləhət almaq vacib addımdır — lakin tənha cavab ola bilməz; baş direktora cavabı gecikdirmək problemin böyüməsinə yol açır.",
+      C: "Əks Nəticəli: 'proqnoz olmayan yaradıcı kommunikasiya' faktiki olaraq aldatma cəhdidir; bu, daha böyük hüquqi risk yaradır. Fondu mülki öhdəliyə sala bilər.",
+      D: "Qismən Effektiv: idarəetmə komitəsinə bildirmək düzgündür, lakin vəziyyət etik baxımdan aydındır — CEO-ya cavab vermək üçün idarəetmə komitəsinin qərarını gözləmək gecikdirmədir.",
+      E: "Effektiv (2-ci): hissə sazişini yenidən dizayn etmək uzunmüddətli həll kimi yaxşıdır, lakin bu, baş direktora 'xahişi rədd etdim' demədən edilərsə etik boşluq qalır."
+    }
+  }
+];
+
+// ══════════════════════════════════════════════
+// STATE
+// ══════════════════════════════════════════════
+let answers = {};
+let currentQ = 0;
+
+// ══════════════════════════════════════════════
+// SCORING
+// ══════════════════════════════════════════════
+function scoreQ(q, ans) {
+  if (!ans) return 0;
+  if (q.type === 'most_least') {
+    return (ans.most === q.answer.most && ans.least === q.answer.least) ? 1 : 0;
+  }
+  if (q.type === 'ranked') {
+    const c = q.answer.ranked, g = ans.ranked || {};
+    let pts = 0;
+    const ml = Object.keys(c).find(k => c[k] === 1);
+    const ll = Object.keys(c).find(k => c[k] === 4);
+    if (g[ml] === 1) pts++;
+    if (g[ll] === 4) pts++;
+    if (Object.keys(c).every(k => g[k] === c[k])) pts++;
+    return Math.min(pts, 3);
+  }
+  if (q.type === 'rated') {
+    const c = q.answer.rated, g = ans.rated || {};
+    let pts = 0;
+    const vl = Object.keys(c).find(k => c[k] === 5);
+    const cl = Object.keys(c).find(k => c[k] === 1);
+    if (g[vl] === 5) pts++;
+    if (g[cl] === 1) pts++;
+    if (Object.keys(c).every(k => g[k] === c[k])) pts++;
+    return Math.min(pts, 3);
+  }
+  return 0;
+}
+
+function totalScore() { return questions.reduce((s, q) => s + scoreQ(q, answers[q.id]), 0); }
+function scenScore(i) { return questions.filter(q => q.sIdx === i).reduce((s, q) => s + scoreQ(q, answers[q.id]), 0); }
+
+function isAnswered(q, ans) {
+  if (!ans) return false;
+  if (q.type === 'most_least') return ans.most && ans.least;
+  if (q.type === 'ranked') { const g = ans.ranked || {}; return q.options.every(o => g[o.letter] !== undefined); }
+  if (q.type === 'rated') { const g = ans.rated || {}; return q.options.filter(o => o.letter !== 'C2').every(o => g[o.letter] !== undefined); }
+  return false;
+}
+
+// ══════════════════════════════════════════════
+// UI
+// ══════════════════════════════════════════════
+function startExam() {
+  document.getElementById('welcome-screen').style.display = 'none';
+  document.getElementById('exam-screen').style.display = 'block';
+  document.getElementById('hdr-right').style.display = 'flex';
+  renderDots();
+  renderQ();
+}
+
+function renderDots() {
+  document.getElementById('dots-row').innerHTML = scenarios.map((_, i) =>
+    `<div class="dot" id="dot-${i}"></div>`).join('');
+}
+
+function updateDots() {
+  scenarios.forEach((_, i) => {
+    const dot = document.getElementById(`dot-${i}`);
+    const qs = questions.filter(q => q.sIdx === i);
+    const done = qs.every(q => isAnswered(q, answers[q.id]));
+    const cur = questions[currentQ].sIdx === i;
+    dot.className = 'dot' + (cur ? ' active' : (done ? ' done' : ''));
+  });
+}
+
+function renderQ() {
+  const q = questions[currentQ];
+  const sc = scenarios[q.sIdx];
+  const prev = currentQ > 0 ? questions[currentQ - 1] : null;
+
+  // Scenario banner
+  const showSc = !prev || prev.sIdx !== q.sIdx;
+  document.getElementById('scenario-container').innerHTML = showSc ? `
+    <div class="scenario-banner" data-scenario="${sc.scenario}">
+      <div class="sb-eyebrow">${sc.label} &mdash; İcraçı Ssenari</div>
+      <div class="sb-company">${sc.company}</div>
+      <div class="sb-context">${sc.context}</div>
+      <div class="sb-meta">${sc.tags.map(t => `<span class="sb-tag">${t}</span>`).join('')}</div>
+    </div>` : '';
+
+  document.getElementById('question-container').innerHTML = buildQ(q);
+  restoreQ(q);
+
+  // Nav
+  document.getElementById('btn-prev').disabled = currentQ === 0;
+  const last = currentQ === questions.length - 1;
+  const nb = document.getElementById('btn-next');
+  nb.textContent = last ? '🏁 Nəticələri Gör' : 'Növbəti →';
+  nb.className = 'btn-nav btn-next' + (last ? ' btn-finish' : '');
+  document.getElementById('q-counter').textContent = `Sual ${currentQ + 1} / ${questions.length}`;
+
+  const done = Object.keys(answers).filter(id => {
+    const qq = questions.find(x => x.id == id);
+    return qq && isAnswered(qq, answers[id]);
+  }).length;
+  document.getElementById('prog-fill').style.width = `${(done / questions.length) * 100}%`;
+  document.getElementById('hdr-prog').textContent = `${done}/16`;
+  document.getElementById('hdr-score').textContent = `${totalScore()}/52`;
+
+  document.getElementById('alert-box').classList.remove('show');
+  updateDots();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function buildQ(q) {
+  const typeMap = { most_least: 'Ən Çox / Ən Az', ranked: 'Sıralama (1-4)', rated: 'Qiymətləndirmə (5-Bal)' };
+  let opts = '';
+
+  if (q.type === 'most_least') {
+    opts = `<div class="options">` + q.options.map(o => `
+      <div class="ml-opt" id="ml-${q.id}-${o.letter}">
+        <div class="ml-opt-text">
+          <span class="opt-ltr">${o.letter}</span>
+          <span class="opt-txt">${o.text}</span>
+        </div>
+        <div class="ml-ctrls">
+          <button class="ml-btn most" id="mb-most-${q.id}-${o.letter}" onclick="pickML(${q.id},'${o.letter}','most')">✓ Ən Çox</button>
+          <button class="ml-btn least" id="mb-least-${q.id}-${o.letter}" onclick="pickML(${q.id},'${o.letter}','least')">✗ Ən Az</button>
+        </div>
+      </div>`).join('') + `</div>`;
+  }
+  if (q.type === 'ranked') {
+    opts = `<div class="options">` + q.options.map(o => `
+      <div class="rk-opt" id="rk-${q.id}-${o.letter}">
+        <span class="opt-ltr">${o.letter}</span>
+        <span class="opt-txt">${o.text}</span>
+        <select class="rk-sel" id="rk-sel-${q.id}-${o.letter}" onchange="pickRank(${q.id},'${o.letter}',this.value)">
+          <option value="">-- Sıra --</option>
+          <option value="1">1 — Ən Effektiv</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4 — Ən Az Effektiv</option>
+        </select>
+      </div>`).join('') + `</div>`;
+  }
+  if (q.type === 'rated') {
+    const labels = { 5: 'Çox Effektiv', 4: 'Effektiv', 3: 'Qismən Effektiv', 2: 'Effektsiz', 1: 'Əks Nəticəli' };
+    // Filter out C2 pseudo-option from display
+    const displayOpts = q.options.filter(o => o.letter !== 'C2');
+    opts = `<div class="options">` + displayOpts.map(o => `
+      <div class="rt-opt" id="rt-${q.id}-${o.letter}">
+        <span class="opt-ltr">${o.letter}</span>
+        <div>
+          <div class="opt-txt">${o.text}</div>
+          <div class="rt-btns">
+            ${[5,4,3,2,1].map(v => `<button class="rt-btn" id="rtb-${q.id}-${o.letter}-${v}" onclick="pickRate(${q.id},'${o.letter}',${v})">${labels[v]}</button>`).join('')}
+          </div>
+        </div>
+      </div>`).join('') + `</div>`;
+  }
+
+  return `
+    <div class="q-card">
+      <div class="q-card-header">
+        <div class="q-badge">${q.qNum}</div>
+        <div class="type-pill">${typeMap[q.type]}</div>
+        <div class="q-comp-pill">▸ ${q.competency}</div>
+      </div>
+      <div class="q-body">
+        <div class="q-situation">${q.situation.replace(/\n/g,'<br>')}</div>
+        <div class="q-instruction">${q.instruction}</div>
+        ${opts}
+      </div>
+    </div>`;
+}
+
+function restoreQ(q) {
+  const ans = answers[q.id];
+  if (!ans) return;
+  if (q.type === 'most_least' && ans.most && ans.least) {
+    applyML(q.id, ans.most, 'most');
+    applyML(q.id, ans.least, 'least');
+    updateMLDisabled(q.id);
+  }
+  if (q.type === 'ranked' && ans.ranked) {
+    Object.entries(ans.ranked).forEach(([lt, v]) => {
+      const sel = document.getElementById(`rk-sel-${q.id}-${lt}`);
+      if (sel) { sel.value = v; document.getElementById(`rk-${q.id}-${lt}`)?.classList.add('ranked'); }
+    });
+  }
+  if (q.type === 'rated' && ans.rated) {
+    Object.entries(ans.rated).forEach(([lt, v]) => setRateBtn(q.id, lt, v));
+  }
+}
+
+// ── ML ──
+function pickML(qId, letter, type) {
+  if (!answers[qId]) answers[qId] = { type: 'most_least' };
+  const other = type === 'most' ? 'least' : 'most';
+  if (answers[qId][other] === letter) return;
+  if (answers[qId][type] === letter) {
+    answers[qId][type] = null;
+    document.getElementById(`mb-${type}-${qId}-${letter}`)?.classList.remove('on');
+    document.getElementById(`ml-${qId}-${letter}`)?.classList.remove(`sel-${type}`);
+    updateMLDisabled(qId); return;
+  }
+  const prev = answers[qId][type];
+  if (prev) {
+    document.getElementById(`mb-${type}-${qId}-${prev}`)?.classList.remove('on');
+    document.getElementById(`ml-${qId}-${prev}`)?.classList.remove(`sel-${type}`);
+  }
+  answers[qId][type] = letter;
+  applyML(qId, letter, type);
+  updateMLDisabled(qId);
+}
+function applyML(qId, letter, type) {
+  document.getElementById(`mb-${type}-${qId}-${letter}`)?.classList.add('on');
+  document.getElementById(`ml-${qId}-${letter}`)?.classList.add(`sel-${type}`);
+}
+function updateMLDisabled(qId) {
+  const q = questions.find(q => q.id === qId);
+  const ans = answers[qId] || {};
+  q.options.forEach(o => {
+    const m = document.getElementById(`mb-most-${qId}-${o.letter}`);
+    const l = document.getElementById(`mb-least-${qId}-${o.letter}`);
+    if (m) m.disabled = ans.least === o.letter;
+    if (l) l.disabled = ans.most === o.letter;
+  });
+}
+
+// ── Rank ──
+function pickRank(qId, letter, val) {
+  if (!answers[qId]) answers[qId] = { type: 'ranked', ranked: {} };
+  const n = parseInt(val);
+  if (isNaN(n)) { delete answers[qId].ranked[letter]; return; }
+  Object.keys(answers[qId].ranked).forEach(k => {
+    if (k !== letter && answers[qId].ranked[k] === n) {
+      answers[qId].ranked[k] = undefined;
+      const s = document.getElementById(`rk-sel-${qId}-${k}`);
+      if (s) s.value = '';
+      document.getElementById(`rk-${qId}-${k}`)?.classList.remove('ranked');
+    }
+  });
+  answers[qId].ranked[letter] = n;
+  document.getElementById(`rk-${qId}-${letter}`)?.classList.add('ranked');
+}
+
+// ── Rate ──
+function pickRate(qId, letter, val) {
+  if (!answers[qId]) answers[qId] = { type: 'rated', rated: {} };
+  const prev = answers[qId].rated[letter];
+  // Remove same val from others
+  Object.keys(answers[qId].rated).forEach(k => {
+    if (k !== letter && answers[qId].rated[k] === val) {
+      clearRateBtn(qId, k, val);
+      delete answers[qId].rated[k];
+    }
+  });
+  if (prev === val) { clearRateBtn(qId, letter, val); delete answers[qId].rated[letter]; return; }
+  if (prev !== undefined) clearRateBtn(qId, letter, prev);
+  answers[qId].rated[letter] = val;
+  setRateBtn(qId, letter, val);
+}
+function setRateBtn(qId, letter, val) {
+  [5,4,3,2,1].forEach(v => {
+    const b = document.getElementById(`rtb-${qId}-${letter}-${v}`);
+    if (b) b.className = 'rt-btn' + (v === val ? ` a${v}` : '');
+  });
+}
+function clearRateBtn(qId, letter, val) {
+  const b = document.getElementById(`rtb-${qId}-${letter}-${val}`);
+  if (b) b.className = 'rt-btn';
+}
+
+// ── Navigation ──
+function navigate(dir) {
+  const q = questions[currentQ];
+  if (dir === 1 && !isAnswered(q, answers[q.id])) {
+    document.getElementById('alert-box').classList.add('show');
+    return;
+  }
+  document.getElementById('alert-box').classList.remove('show');
+  if (dir === 1 && currentQ === questions.length - 1) { showResults(); return; }
+  currentQ = Math.max(0, Math.min(questions.length - 1, currentQ + dir));
+  renderQ();
+}
+
+// ══════════════════════════════════════════════
+// RESULTS
+// ══════════════════════════════════════════════
+function showResults() {
+  document.getElementById('exam-screen').style.display = 'none';
+  document.getElementById('results-screen').style.display = 'block';
+  document.getElementById('hdr-right').style.display = 'none';
+
+  const total = totalScore();
+  const maxT = 52;
+  const pct = Math.round((total / maxT) * 100);
+  const deg = Math.round((total / maxT) * 360);
+  const circ = 2 * Math.PI * 54;
+  const offset = circ - (total / maxT) * circ;
+
+  const grades = pct >= 85 ? ['İstisna Lider', '#1db87a'] : pct >= 70 ? ['Yüksək Potensial', '#2b8fd4'] : pct >= 55 ? ['Əsas Karyera İnkişafı Tələb Olunur', '#e8a020'] : ['Köklü Liderlik Hazırlığı Lazımdır', '#e05252'];
+
+  const subHTML = scenarios.map((sc, i) => {
+    const pts = scenScore(i); const max = sc.maxScore;
+    const pct2 = (pts / max) * 100;
+    return `<div class="subscore-card">
+      <div class="sc-label">${sc.label}</div>
+      <div class="sc-name">${sc.company.split('—')[0].trim()}</div>
+      <div class="subscore-bar-track"><div class="subscore-bar-fill" style="width:${pct2}%"></div></div>
+      <div class="sc-score">${pts}<span class="sc-max"> / ${max}</span></div>
+    </div>`;
+  }).join('');
+
+  const revHTML = questions.map(q => {
+    const ans = answers[q.id];
+    const pts = scoreQ(q, ans);
+    const maxPts = q.type === 'most_least' ? 1 : 3;
+    const pCls = pts === maxPts ? 'pts-full' : pts > 0 ? 'pts-part' : 'pts-zero';
+    const sc = scenarios[q.sIdx];
+
+    let optsHTML = '', yourAns = '';
+
+    if (q.type === 'most_least') {
+      const ua = ans || {};
+      optsHTML = q.options.map(o => {
+        const isMost = o.letter === q.answer.most;
+        const isLeast = o.letter === q.answer.least;
+        const yourMost = ua.most === o.letter;
+        const yourLeast = ua.least === o.letter;
+        let cls = 'rev-neutral';
+        if (isMost || isLeast) cls = 'rev-correct';
+        if ((yourMost && !isMost) || (yourLeast && !isLeast)) cls = 'rev-wrong';
+        const badge = isMost ? ' <strong>[✓ Ən Effektiv]</strong>' : isLeast ? ' <strong>[✗ Ən Az Effektiv]</strong>' : '';
+        const yours = yourMost ? ' <em style="color:var(--success)"> ← Sizin (Ən Çox)</em>' : yourLeast ? ' <em style="color:var(--danger)"> ← Sizin (Ən Az)</em>' : '';
+        return `<div class="rev-opt ${cls}"><span class="rl">${o.letter})</span>${o.text}${badge}${yours}</div>`;
+      }).join('');
+      yourAns = `<div style="font-size:0.75rem;color:var(--text-3);margin-top:6px;font-style:italic">Sizin: Ən Çox→${ua.most||'?'}, Ən Az→${ua.least||'?'} | Düzgün: Ən Çox→${q.answer.most}, Ən Az→${q.answer.least}</div>`;
+    }
+    if (q.type === 'ranked') {
+      const c = q.answer.ranked, g = (ans&&ans.ranked)||{};
+      const rl = {1:'1 (Ən Effektiv)',2:'2',3:'3',4:'4 (Ən Az)'};
+      optsHTML = q.options.map(o => {
+        const ok = g[o.letter] === c[o.letter];
+        return `<div class="rev-opt ${ok?'rev-correct':'rev-wrong'}"><span class="rl">${o.letter})</span>${o.text}<br><small style="color:var(--text-3)">Düzgün: <strong>${rl[c[o.letter]]}</strong> | Sizin: ${g[o.letter]?rl[g[o.letter]]:'?'} ${ok?'✓':'✗'}</small></div>`;
+      }).join('');
+    }
+    if (q.type === 'rated') {
+      const c = q.answer.rated, g = (ans&&ans.rated)||{};
+      const rl = {5:'Çox Effektiv',4:'Effektiv',3:'Qismən Effektiv',2:'Effektsiz',1:'Əks Nəticəli'};
+      const displayOpts = q.options.filter(o => o.letter !== 'C2');
+      optsHTML = displayOpts.map(o => {
+        const ok = g[o.letter] === c[o.letter];
+        return `<div class="rev-opt ${ok?'rev-correct':'rev-wrong'}"><span class="rl">${o.letter})</span>${o.text}<br><small style="color:var(--text-3)">Düzgün: <strong>${rl[c[o.letter]]}</strong> | Sizin: ${g[o.letter]?rl[g[o.letter]]:'?'} ${ok?'✓':'✗'}</small></div>`;
+      }).join('');
+    }
+
+    const expHTML = Object.entries(q.explanations||{}).filter(([k])=>k!=='C2').map(([k,v])=>`<div style="margin-bottom:8px"><strong style="color:var(--gold)">${k})</strong> ${v}</div>`).join('');
+
+    return `<div class="rev-card">
+      <div class="rev-card-hdr" onclick="togRev(this)">
+        <div>
+          <div class="rev-q-lbl">${sc.label} · Sual ${q.qNum} · ${q.competency}</div>
+          <div class="rev-q-sub">${q.situation.substring(0,90)}…</div>
+        </div>
+        <div class="rev-right">
+          <span class="pts-pill ${pCls}">${pts}/${maxPts} bal</span>
+          <span class="chevron-icon">▼</span>
+        </div>
+      </div>
+      <div class="rev-card-body">
+        <div class="rev-situation">${q.situation.replace(/\n/g,'<br>')}</div>
+        ${optsHTML}${yourAns}
+        <div class="rev-explanation"><strong>📋 İzahlar:</strong>${expHTML}</div>
+      </div>
+    </div>`;
+  }).join('');
+
+  document.getElementById('results-screen').innerHTML = `
+    <div class="results-hero">
+      <div class="rh-eyebrow">İmtahan Tamamlandı</div>
+      <div class="rh-title">İcraçı Liderlik Qiymətləndirməsi — Nəticəniz</div>
+      <div class="score-ring-wrap">
+        <svg class="score-ring-svg" viewBox="0 0 120 120">
+          <circle class="score-ring-bg" cx="60" cy="60" r="54"/>
+          <circle class="score-ring-fill" cx="60" cy="60" r="54"
+            stroke="${grades[1]}"
+            stroke-dasharray="${circ}"
+            stroke-dashoffset="${offset}"/>
+        </svg>
+        <div class="score-ring-center">
+          <div class="score-num">${total}</div>
+          <div class="score-den">/ ${maxT}</div>
+        </div>
+      </div>
+      <div class="score-pct" style="color:${grades[1]}">${pct}%</div>
+      <div class="score-grade">${grades[0]}</div>
+    </div>
+
+    <div class="subscores">${subHTML}</div>
+
+    <div class="review-hdr">🔍 Sualların Ətraflı İzahı</div>
+    ${revHTML}
+    <button class="btn-restart" onclick="restartExam()">↺ Testi Yenidən Başlat</button>
+  `;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function togRev(hdr) {
+  hdr.classList.toggle('open');
+  hdr.nextElementSibling.classList.toggle('open');
+}
+
+function restartExam() {
+  answers = {}; currentQ = 0;
+  document.getElementById('results-screen').style.display = 'none';
+  document.getElementById('welcome-screen').style.display = 'block';
+  document.getElementById('hdr-right').style.display = 'none';
+  document.getElementById('prog-fill').style.width = '0%';
+}
+</script>
+</body>
+</html>
