@@ -1309,7 +1309,7 @@ function showResults(isTimeout = false) {
         if (isMost || isLeast) cls = 'rev-correct';
         if ((yourMost && !isMost) || (yourLeast && !isLeast)) cls = 'rev-wrong';
         const badge = isMost ? ' <strong>[✓ Ən Effektiv]</strong>' : isLeast ? ' <strong>[✗ Ən Az Effektiv]</strong>' : '';
-        const yours = yourMost ? ' <em style="color:var(--success)"> ← Sizin (Ən Çox)</em>' : yourLeast ? ' <em style="color:var(--danger)"> ← Sizin (Ən Az)</em>' : '';
+        const yours = yourMost ? ' <em style="color:var(--success)"> ← Sizin seçiminiz (Ən Çox)</em>' : yourLeast ? ' <em style="color:var(--danger)"> ← Sizin seçiminiz (Ən Az)</em>' : '';
         return `<div class="rev-opt ${cls}"><span class="rl">${o.letter})</span>${o.text}${badge}${yours}</div>`;
       }).join('');
       yourAns = `<div style="font-size:0.75rem;color:var(--text-3);margin-top:6px;font-style:italic">Sizin: Ən Çox→${ua.most||'Cavabsız'}, Ən Az→${ua.least||'Cavabsız'} | Düzgün: Ən Çox→${q.answer.most}, Ən Az→${q.answer.least}</div>`;
